@@ -1,0 +1,41 @@
+.nav_bar{
+    height: 70px;
+    width: 100%;
+    position: fixed;
+    background-color: white;
+    z-index: 1;
+
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    font-family:sans-serif;
+}
+
+span{
+    height: 50px;
+    border-left: 1px solid black;
+}
+
+.link{
+    text-decoration: none;
+
+    width: 100px;
+    height: 70px;
+
+    color: black;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    
+}
+
+.links_container{
+    display: flex;
+    justify-content: center;
+}
+
+.logo_container{
+    height: 150px;
+}
