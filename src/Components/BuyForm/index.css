@@ -12,6 +12,8 @@
 
   display: flex;
   align-items: center;
+
+  font-family: sans-serif;
 }
 
 .modal-container {
@@ -27,12 +29,13 @@
 }
 
 .modal-content {
+  width: 80%;
+  height: 95%;
   position: fixed;
   background: white;
-  padding: 20px;
+  padding: 0px 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
 }
 
 .close-btn {
@@ -43,6 +46,22 @@
   cursor: pointer;
 }
 
+.form_container {
+  display: flex;
+  flex-direction: row; /* Updated to column */
+}
+
+.form_content_container {
+  width: 85%; /* Updated to 100% */
+  max-height: 95vh; /* Set a specific height for scrolling */
+  overflow: auto;
+}
+
+.board_icon{
+  width: 100px;
+  height: 100px;
+}
+
 .buy_button {
   padding: 0;
   padding-right: 6px;
@@ -50,7 +69,6 @@
   border: none;
 
   text-decoration: none;
-  font-family: sans-serif;
 
   color: black;
   background-color: transparent;
@@ -64,4 +82,17 @@
 .buy_icon_container{
   height: 30px;
   width: 30px;
+}
+
+.submit_area{
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  padding-top: 40px;
+}
+
+.summary{
 }

@@ -1,16 +1,17 @@
 import './index.css';
 import maplibregl from 'maplibre-gl';
 import { useEffect, useRef, useState } from "react";
-import {createRoot}  from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 import marker_img from '../../assets/pngegg.png';
 
 import PopupContent from '../PopUpContent/PopUpContent';
 import BuyForm from '../BuyForm/BuyForm';
 
-const MapContainer = ({markers}) => {
+const MapContainer = ({ markers }) => {
     const mapPlacer = useRef(null);
     const [mapStyle, setMapStyle] = useState("arcgis/imagery");
+    const [selectedMarkers, setSelectedMarkers]= useState([]); 
 
     const handleMapStyleChange = (e) => {
         setMapStyle(e.target.value);
@@ -23,26 +24,28 @@ const MapContainer = ({markers}) => {
         const map = new maplibregl.Map({
             container: mapPlacer.current,
             style: `${basemapStyleURL}${mapStyle}?token=${apiKey}`,
-            center: [36.2304, 49.9935],
-            zoom: 12,
+            center: [50, 50],
+            zoom: 1,
         });
 
-        markers.forEach((marker) => {
+        markers?.forEach((marker) => {
             const popup = new maplibregl.Popup();
 
             // Convert the React component to a DOM node
             const popupContentNode = document.createElement('div');
             const reactRoot = createRoot(popupContentNode);
-            reactRoot.render(<PopupContent title={marker.title} img ={marker_img} description={marker.description}/>);
-            
+            reactRoot.render(
+            <PopupContent marker={marker} img={marker_img} setSelectedMarkers={setSelectedMarkers}/>
+            );
+
             // Set the DOM node as the content of the Popup
             popup.setDOMContent(popupContentNode);
-            
+
             new maplibregl.Marker({ element: customMarker(), })
                 .setLngLat([marker.longitude, marker.latitude])
                 .setPopup(popup)
                 .addTo(map);
-            
+
         });
 
         return () => map.remove();
@@ -79,8 +82,8 @@ const MapContainer = ({markers}) => {
     ];
 
     return (
-        <main style={{ width: "100%", height: "100vh"}}>
-                <div className="mapWrapper" ref={mapPlacer}></div>
+        <main style={{ width: "100%", height: "100vh" }}>
+            <div className="mapWrapper" ref={mapPlacer}></div>
 
             <div className="basemapsWrapper">
                 <select onChange={handleMapStyleChange} value={mapStyle} className="basemaps">
@@ -92,7 +95,7 @@ const MapContainer = ({markers}) => {
                 </select>
             </div>
 
-            <BuyForm className="buy_button" />
+            <BuyForm className="buy_button" selectedMarkers={selectedMarkers} markers={markers}/>
         </main>
     );
 }
