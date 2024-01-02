@@ -6,13 +6,11 @@ import buy_img from "../../assets/buy.svg";
 import 'react-datepicker/dist/react-datepicker.css';
 import BillboardRent from "../BillboardRent/BillboardRent";
 
-const BuyForm = ({ selectedMarkers, markers }) => {
+const BuyForm = ({ selectedMarkers, markers, fetchData }) => {
   const [isFormVisible, setFormVisible] = useState(false);
   const [filteredBySelected, setFilteredBySelected] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [summ, setSumm] = useState(0);
-
-  const [responseMessage, setResponseMessage] = useState(null);
 
   const openForm = () => {
     setFormVisible(true);
@@ -24,27 +22,40 @@ const BuyForm = ({ selectedMarkers, markers }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //var stringifyDate = require('json-stringify-date');
-    try {
-      console.log(selectedDates);
-      const response = await fetch('https://bord.azurewebsites.net/api/Bord', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(selectedDates),
+
+    selectedDates.map(async (element) => {
+      const jsonString = stringifyDate.stringify(element, (key, value) => {
+        if (typeof value === 'string' && value.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)) {
+          // Convert string to a custom string format without time zone offset
+          const dateWithoutOffset = value.slice(0, -6);
+          return dateWithoutOffset;
+        }
+        return value;
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const result = await response.json();
-      setResponseMessage(result.message); // Adjust based on your API response structure
-      console.log(responseMessage);
-    } catch (error) {
-      console.log(error);
-    }
+      console.log(jsonString);
+    
+      try {
+        const response = await fetch('https://bord.azurewebsites.net/api/Bord', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: jsonString,
+        });
+    
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+    
+        const result = await response.json();
+        console.log(result.message);
+      } catch (error) {
+        console.log(error);
+      } 
+    });
+    
+    await fetchData();
     closeForm();
   };
 
@@ -55,7 +66,6 @@ const BuyForm = ({ selectedMarkers, markers }) => {
   useEffect(() => {
     setFilteredBySelected(markers?.filter(item => selectedMarkers.includes(item.billboardId)));
   }, [selectedMarkers])
-
 
   return (
     <div className="buy_form">

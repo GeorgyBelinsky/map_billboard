@@ -8,7 +8,7 @@ import marker_img from '../../assets/pngegg.png';
 import PopupContent from '../PopUpContent/PopUpContent';
 import BuyForm from '../BuyForm/BuyForm';
 
-const MapContainer = ({ markers }) => {
+const MapContainer = ({ markers , fetchData}) => {
     const mapPlacer = useRef(null);
     const [mapStyle, setMapStyle] = useState("arcgis/imagery");
     const [selectedMarkers, setSelectedMarkers]= useState([]); 
@@ -95,7 +95,7 @@ const MapContainer = ({ markers }) => {
                 </select>
             </div>
 
-            <BuyForm className="buy_button" selectedMarkers={selectedMarkers} markers={markers}/>
+            <BuyForm className="buy_button" selectedMarkers={selectedMarkers} markers={markers} fetchData={fetchData}/>
         </main>
     );
 }

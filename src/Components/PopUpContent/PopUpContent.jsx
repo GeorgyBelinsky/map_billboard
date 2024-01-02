@@ -1,6 +1,6 @@
 import './index.css';
 import cart_img from "../../assets/cart.svg";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const PopUpContent = ({ marker, img, setSelectedMarkers }) => {
   const [isChecked, setChecked] = useState(false);

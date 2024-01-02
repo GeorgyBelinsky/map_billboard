@@ -9,26 +9,25 @@ import { useState, useEffect } from 'react';
 function App() {
   const [markers, setMarkers] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Replace 'your-api-endpoint' with your actual API endpoint URL
-        const response = await fetch('https://bord.azurewebsites.net/api/Bord');
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const result = await response.json();
-        setMarkers(result);
-        console.log(result);
-      } catch (error) {
-        console.log(error);
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://bord.azurewebsites.net/api/Bord');
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
 
+      const result = await response.json();
+      setMarkers(result);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, []); // Emp  
+  }, []);
   
 
 /*    const markers = [
@@ -45,7 +44,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Navigate to="/map"/>}></Route>
-        <Route path="/map" element={<MapContainer markers={markers}/>} />
+        <Route path="/map" element={<MapContainer markers={markers} fetchData={fetchData}/>} />
         <Route path="/cabinet" element ={<UserPage/>}/>
       </Routes>
     </>
