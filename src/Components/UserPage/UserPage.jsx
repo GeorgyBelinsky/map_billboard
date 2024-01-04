@@ -6,7 +6,6 @@ const UserPage = () => {
     const [isRegistered, setIsRegistered] = useState(false);
 
     const registerUser = async (userData) => {
-        console.log(JSON.stringify(userData));
         try {
             const response = await fetch('https://bord.azurewebsites.net/api/User/Register', {
                 method: 'POST',

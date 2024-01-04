@@ -8,7 +8,6 @@ const RegisterForm = ({ registerUser, setIsRegistered }) => {
 
         try {
             const result = await registerUser(formData);
-            console.log('Registration successful:', result);
             alert("User "+formData.firstName +" "+formData.secondName+" successfuly registered.")
             setIsRegistered(true);
         } catch (error) {
