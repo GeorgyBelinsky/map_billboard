@@ -19,8 +19,8 @@ const UserPage = () => {
             if (!response.ok) {
                 throw new Error('Registration failed');
             }
-            const result = await response.json();
-            return result; // You might want to return some data from the server response
+
+            return await response.text();; // You might want to return some data from the server response
         } catch (error) {
             console.error('Error during registration:', error);
             throw error;
