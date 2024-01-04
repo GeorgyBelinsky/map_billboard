@@ -1,0 +1,40 @@
+.user_page{
+    height: 100vh;
+    width: 100%;
+    padding-top: 70px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:20px;
+
+    font-family: sans-serif;
+}
+
+.authorize_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px
+}
+
+input{
+    height: 30px;
+    border: 1px dotted black;
+    border-radius: 15px;
+    padding-left: 10px;
+}
+
+.switch_form{
+    text-decoration: none;
+}
+
+.submit_button{
+    height: 30px;
+    border: 1px dotted black;
+    border-radius: 15px;
+    width: 120px;
+    background-color: white;
+}

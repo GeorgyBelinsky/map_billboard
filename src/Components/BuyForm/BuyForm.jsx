@@ -6,7 +6,7 @@ import buy_img from "../../assets/buy.svg";
 import 'react-datepicker/dist/react-datepicker.css';
 import BillboardRent from "../BillboardRent/BillboardRent";
 
-const BuyForm = ({ selectedMarkers, markers, fetchData }) => {
+const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => {
   const [isFormVisible, setFormVisible] = useState(false);
   const [filteredBySelected, setFilteredBySelected] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
@@ -50,18 +50,18 @@ const BuyForm = ({ selectedMarkers, markers, fetchData }) => {
     
         const result = await response.json();
         console.log(result.message);
+        console.log(markers);
       } catch (error) {
         console.log(error);
       } 
     });
     
+
+    setSelectedMarkers([]);
     await fetchData();
     closeForm();
+    location.reload();
   };
-
-  useEffect(() => {
-    console.log(selectedDates);
-  }, [selectedDates])
 
   useEffect(() => {
     setFilteredBySelected(markers?.filter(item => selectedMarkers.includes(item.billboardId)));
@@ -79,7 +79,7 @@ const BuyForm = ({ selectedMarkers, markers, fetchData }) => {
             <span className="close-btn" onClick={closeForm}>&times;</span>
             <form className="form_container" onSubmit={handleSubmit}>
               <div className="form_content_container">
-                {filteredBySelected.map((board, index) =>
+                {filteredBySelected?.map((board, index) =>
                   <BillboardRent board={board} key={index} selectedDates={selectedDates} setSelectedDates={setSelectedDates}/>
                 )}
               </div>

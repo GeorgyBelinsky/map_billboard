@@ -95,7 +95,7 @@ const MapContainer = ({ markers , fetchData}) => {
                 </select>
             </div>
 
-            <BuyForm className="buy_button" selectedMarkers={selectedMarkers} markers={markers} fetchData={fetchData}/>
+            <BuyForm className="buy_button" selectedMarkers={selectedMarkers} setSelectedMarkers={setSelectedMarkers} markers={markers} fetchData={fetchData}/>
         </main>
     );
 }

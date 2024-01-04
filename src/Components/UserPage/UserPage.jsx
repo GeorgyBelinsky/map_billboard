@@ -1,35 +1,61 @@
+import { useState } from 'react';
 import './index.css';
+import AuthorizeForm from './AuthorizeForm/AuthorizeForm';
+import RegisterForm from './RegisterForm/RegisterForm';
+const UserPage = () => {
+    const [isRegistered, setIsRegistered] = useState(false);
 
-const UserPage = () =>{
+    const registerUser = async (userData) => {
+        console.log(JSON.stringify(userData));
+        try {
+            const response = await fetch('https://bord.azurewebsites.net/api/User/Register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+            const result = await response.json();
+            return result; // You might want to return some data from the server response
+        } catch (error) {
+            console.error('Error during registration:', error);
+            throw error;
+        }
+    };
+
+    const authUser = async (credentials) => {
+        try {
+            const response = await fetch('https://bord.azurewebsites.net/api/User/authenticate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials),
+            });
+
+            if (!response.ok) {
+                throw new Error('Authentication failed');
+            }
+
+            // Return the entire response or specific data if needed
+            return await response.text();
+
+        } catch (error) {
+            console.error('Error during authentication:', error);
+            throw error;
+        }
+    };
 
     return (
-        <div className="">
-            <h2>Authorization Form</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Login</button>
-      </form>
+        <div className="user_page">
+            {!isRegistered ? <RegisterForm registerUser={registerUser} setIsRegistered={setIsRegistered}/> : <AuthorizeForm authUser={authUser} />}
+            <a className="switch_form" href="#" onClick={() => setIsRegistered((prevIsRegistered) => !prevIsRegistered)}>
+                {!isRegistered ? "Already registered? Authorize."
+                    : "Don`t have account? Register."}</a>
         </div>
     )
 }
