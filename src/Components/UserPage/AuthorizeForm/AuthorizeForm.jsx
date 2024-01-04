@@ -18,6 +18,7 @@ const AuthorizeForm = ({ authUser }) => {
           
             alert('Authentication successfull');
             toMap();
+            location.reload();
         } catch (error) {
             alert('Authentication failed:', error);
         }

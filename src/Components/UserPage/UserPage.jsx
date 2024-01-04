@@ -41,7 +41,6 @@ const UserPage = () => {
                 throw new Error('Authentication failed');
             }
 
-            // Return the entire response or specific data if needed
             return await response.text();
 
         } catch (error) {
