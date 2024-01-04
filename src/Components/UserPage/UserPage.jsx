@@ -20,7 +20,7 @@ const UserPage = () => {
                 throw new Error('Registration failed');
             }
 
-            return await response.text();; // You might want to return some data from the server response
+            return await response.text(); // You might want to return some data from the server response
         } catch (error) {
             console.error('Error during registration:', error);
             throw error;
