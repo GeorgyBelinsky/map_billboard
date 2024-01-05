@@ -5,9 +5,8 @@ const AuthorizeForm = ({ authUser }) => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
 
     const navigate = useNavigate();
-
     function toMap() {
-        return navigate("/map");
+        return navigate("/");
     }
 
     const handleAuthenticate = async (e) => {
@@ -21,11 +20,8 @@ const AuthorizeForm = ({ authUser }) => {
             location.reload();
         } catch (error) {
             alert('Authentication failed:', error);
-        }
+        }   
     };
-
-    //"firstName":"George","secondName":"Belinsky","email":"belinskygeorg@gmail.com","password":"IOjhbckwiKU1239_!"
-    //"firstName":"IUOWAJw","secondName":"ces","email":"ascwa@gmail.com","password":"Aasas123_"
 
     return (
         <form className="authorize_form" onSubmit={handleAuthenticate}>

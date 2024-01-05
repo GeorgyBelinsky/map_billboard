@@ -3,7 +3,7 @@ import './Components/MapContainer/MapContainer'
 import MapContainer from './Components/MapContainer/MapContainer';
 import NavBar from './Components/NavBar/NavBar';
 import UserPage from './Components/UserPage/UserPage'
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -40,11 +40,10 @@ function App() {
 
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <Routes>
-        <Route path="/" element={<Navigate to="/map" />}></Route>
-        <Route path="/map" element={<MapContainer markers={markers} fetchData={fetchData} />} />
-        <Route path="/authorization" element={<UserPage/>} />
+        <Route path="/" element={<MapContainer markers={markers} fetchData={fetchData} />} />
+        <Route path="/authorization" element={<UserPage />} />
       </Routes>
     </>
   )

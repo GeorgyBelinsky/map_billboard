@@ -32,8 +32,6 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
         }
         return value;
       });
-
-      console.log(jsonString);
     
       try {
         const response = await fetch('https://bord.azurewebsites.net/api/Bord', {
@@ -49,8 +47,7 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
         }
     
         const result = await response.json();
-        console.log(result.message);
-        console.log(markers);
+
       } catch (error) {
         console.log(error);
       } 
@@ -84,7 +81,7 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
                 )}
               </div>
               <div className="submit_area">
-                <p className="summary">{summ}$</p>
+                {/* <p className="summary">{summ}$</p> */}
                 <button className="confirm_button" type="submit">rent</button>
               </div>
             </form>

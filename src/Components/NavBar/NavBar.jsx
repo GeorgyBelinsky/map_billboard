@@ -27,7 +27,6 @@ const NavBar = () => {
       }, []);
 
     const handleLogOut=()=>{
-        console.log(localStorage);
         localStorage.clear();
         setIsAuthorized(false);
     }

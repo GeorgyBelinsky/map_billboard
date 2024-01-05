@@ -36,6 +36,7 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
     });
 
     const daysDifference = Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24)) + 1 - filteredDates.length;
+    
     setDayCostSum(date2 != null ? daysDifference * board.dayCoast : 0);
   }, [selectedDates])
 
@@ -44,7 +45,7 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
   const selectedBoard = selectedDates.find((bord) => bord.billboardId === board.billboardId);
 
   // Set initial values based on whether the board is already selected
-  const initialStartDate = selectedBoard ? selectedBoard.startDate : new Date();
+  const initialStartDate = selectedBoard ? selectedBoard.startDate : null;
   const initialEndDate = selectedBoard ? selectedBoard.endDate : null;
 
   return (

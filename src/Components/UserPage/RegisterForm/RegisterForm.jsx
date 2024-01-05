@@ -15,8 +15,6 @@ const RegisterForm = ({ registerUser, setIsRegistered }) => {
         }
     };
 
-    //"firstName":"George","secondName":"Belinsky","email":"belinskygeorg@gmail.com","password":"IOjhbckwiKU1239_!"
-    //"firstName":"IUOWAJw","secondName":"ces","email":"ascwa@gmail.com","password":"Aasas123_"
     return (
         <form className="authorize_form" onSubmit={handleRegister}>
             <h3>Registration</h3>
