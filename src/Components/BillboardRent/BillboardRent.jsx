@@ -1,7 +1,7 @@
 import TEST_IMG from '../../assets/pngegg.png';
 import DatePicker from 'react-datepicker';
 import { useState, useEffect } from 'react';
-
+import 'react-datepicker/dist/react-datepicker.css';
 import './index.css';
 
 const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
@@ -32,11 +32,10 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
 
     const filteredDates = board.rentalDates.filter(date => {
       const currentDate = new Date(date);
-      return currentDate >= date1 && currentDate <= date2;
+      return currentDate > date1 && currentDate < date2;
     });
 
     const daysDifference = Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24)) + 1 - filteredDates.length;
-    
     setDayCostSum(date2 != null ? daysDifference * board.dayCoast : 0);
   }, [selectedDates])
 
@@ -72,14 +71,12 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
           onChange={setDates}
           startDate={initialStartDate}
           endDate={initialEndDate}
-          excludeDates={board.rentalDates.map((date) => new Date(date))}
+          excludeDates={board.rentalDates.map((date) => new Date(date).setHours(0, 0, 0, 0))}
           selectsRange
           inline
         />
-        <div className="selection_zone">
           <div className="calc_price">Your price:
           <p>{dayCostSum}$</p>
-        </div>
         </div>
       </div>
     </div>

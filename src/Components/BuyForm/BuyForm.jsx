@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import stringifyDate from 'json-stringify-date';
 import "./index.css"
 import buy_img from "../../assets/buy.svg";
-
-import 'react-datepicker/dist/react-datepicker.css';
 import BillboardRent from "../BillboardRent/BillboardRent";
 
 const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => {
