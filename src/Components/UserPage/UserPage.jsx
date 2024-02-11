@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './index.css';
 import AuthorizeForm from './AuthorizeForm/AuthorizeForm';
 import RegisterForm from './RegisterForm/RegisterForm';
+import { useEffect } from 'react';
 const UserPage = () => {
     const [isRegistered, setIsRegistered] = useState(false);
 
@@ -16,12 +17,16 @@ const UserPage = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Registration failed');
+                const errorData = await response.json();
+                const errorMessages = errorData.error.split(/,\s*/); 
+
+                alert(errorMessages.join('\n'));
+                throw new Error(errorData.error);
             }
 
-            return await response.text(); // You might want to return some data from the server response
+            return await response.text();
         } catch (error) {
-            console.error('Error during registration:', error);
+            console.error('Error during registration:', error.message);
             throw error;
         }
     };
@@ -37,20 +42,22 @@ const UserPage = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Authentication failed');
+                const errorData = await response.json();
+                alert(errorData.message, "Error");
+                throw new Error(errorData.message);
             }
 
             return await response.text();
 
         } catch (error) {
-            console.error('Error during authentication:', error);
+            console.error('Error during authentication:', error.message);
             throw error;
         }
     };
 
     return (
         <div className="user_page">
-            {!isRegistered ? <RegisterForm registerUser={registerUser} setIsRegistered={setIsRegistered}/> : <AuthorizeForm authUser={authUser} />}
+            {!isRegistered ? <RegisterForm registerUser={registerUser} setIsRegistered={setIsRegistered} /> : <AuthorizeForm authUser={authUser} />}
             <a className="switch_form" href="#" onClick={() => setIsRegistered((prevIsRegistered) => !prevIsRegistered)}>
                 {!isRegistered ? "Already registered? Authorize."
                     : "Don`t have account? Register."}</a>

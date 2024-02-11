@@ -11,16 +11,15 @@ const AuthorizeForm = ({ authUser }) => {
 
     const handleAuthenticate = async (e) => {
         e.preventDefault();
-        try {
-            const result = await authUser(credentials);
-            localStorage.setItem('token', result);
-          
-            alert('Authentication successfull');
-            toMap();
-            location.reload();
-        } catch (error) {
-            alert('Authentication failed:', error);
-        }   
+
+        try{
+        const result = await authUser(credentials);
+        localStorage.setItem('token', result);
+
+        alert('Authentication successfull');
+        toMap();
+        location.reload();
+        }catch{}
     };
 
     return (
