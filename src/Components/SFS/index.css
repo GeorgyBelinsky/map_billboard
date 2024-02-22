@@ -1,0 +1,77 @@
+.sfs_container {
+    width: 330px;
+    height: 80%;
+
+    position: fixed;
+    top: 15%;
+    right: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.result_field{
+    background-color: white;
+    border: 1px black solid;
+    border-radius: 15px;
+    width: 280px;
+    height: 30%;
+    max-height: 100%;
+}
+
+.toolbar{
+    height: 180px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.toolbar_button{
+    background-color: white;
+    border-radius: 50px;
+    border: 1px black solid;
+    height: 40px;
+    width: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toolbar_button:hover{
+   background-color: black;
+   transition: 500ms;
+}
+
+.toolbar_icon:hover{
+    fill: white;
+    transition: 500ms;
+}
+
+.toolbar_icon{
+    width: 28px;
+    height: 28px;
+}
+
+.toolbar_button.selected {
+    background-color: black;
+    transition: 500ms;
+}
+
+.toolbar_icon.selected {
+    fill: white;
+    transition: 500ms;
+}
+
+.toolbar_button.selected:hover{
+    background-color: white;
+    transition: 500ms;
+ }
+ 
+ .toolbar_icon.selected:hover{
+     fill: black;
+     transition: 500ms;
+ }

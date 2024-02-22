@@ -1,4 +1,4 @@
-.buy_form{
+.buy_button{
   position: absolute;
   height: 30px;
 
@@ -6,7 +6,7 @@
   border: 1px black solid;
   border-radius: 15px;
 
-  top: 80px;
+  top: 10.5vh;
   right: 210px;
   z-index: 2;
 
@@ -14,6 +14,23 @@
   align-items: center;
 
   font-family: sans-serif;
+}
+
+.button_content {
+  padding: 0;
+  padding-right: 5px;
+
+  border: none;
+
+  text-decoration: none;
+
+  color: black;
+  background-color: transparent;
+
+  display: flex;
+  align-items: center;
+  
+  cursor: pointer;
 }
 
 .modal-container {
@@ -62,22 +79,7 @@
   height: 100px;
 }
 
-.buy_button {
-  padding: 0;
-  padding-right: 6px;
 
-  border: none;
-
-  text-decoration: none;
-
-  color: black;
-  background-color: transparent;
-
-  display: flex;
-  align-items: center;
-  
-  cursor: pointer;
-}
 
 .buy_icon_container{
   height: 30px;

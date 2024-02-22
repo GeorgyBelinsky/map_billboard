@@ -17,16 +17,16 @@ const RegisterForm = ({ registerUser, setIsRegistered }) => {
         <form className="authorize_form" onSubmit={handleRegister}>
             <h3>Registration</h3>
 
-            <input required type="text" placeholder="Name" value={formData.firstName}
+            <input required className="field_input" type="text" placeholder="Name" value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
 
-            <input required type="text" placeholder="Surname" value={formData.secondName}
+            <input required className="field_input" type="text" placeholder="Surname" value={formData.secondName}
                 onChange={(e) => setFormData({ ...formData, secondName: e.target.value })} />
 
-            <input required type="email" placeholder="Email" value={formData.email}
+            <input required className="field_input" type="email" placeholder="Email" value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
 
-            <input required type="password" placeholder="Password" value={formData.password}
+            <input required className="field_input" type="password" placeholder="Password" value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
             {/*password regexp : pattern="^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$"/>*/}
             <button className="submit_button" type="submit">Register</button>

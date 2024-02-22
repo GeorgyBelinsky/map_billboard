@@ -20,7 +20,7 @@
     gap: 5px
 }
 
-input{
+.field_input{
     height: 30px;
     border: 1px dotted black;
     border-radius: 15px;

@@ -35,7 +35,8 @@ const NavBar = () => {
         <div className="nav_bar">
             <img className='logo_container' src={logo_img} />
             <div className='links_container'>
-                <Link className="link" to="/"><span className='link_border'/>Map</Link>
+                <Link className="link" to="/support"><span className='link_border'/>Support</Link>
+                <Link className="link" to="/"><span className='link_border'/>Buy</Link>
                 {isAuthorized?<a className="link" onClick={handleLogOut}><span className='link_border'/>Log out</a> :
                 <Link className="link" to="/authorization"><span className='link_border'/>Login</Link>}
             </div>

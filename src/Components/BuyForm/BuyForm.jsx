@@ -32,7 +32,7 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
       });
     
       try {
-        const response = await fetch('https://bord.azurewebsites.net/api/Bord', {
+        const response = await fetch('https://bord.azurewebsites.net/api/Bord/RentBoard/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -63,8 +63,8 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
   }, [selectedMarkers])
 
   return (
-    <div className="buy_form">
-      <button onClick={openForm} className="buy_button">
+    <div className="buy_button">
+      <button onClick={openForm} className="button_content">
         <img src={buy_img} className="buy_icon_container" />Selected: {selectedMarkers.length}
       </button>
 

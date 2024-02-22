@@ -1,5 +1,5 @@
 .nav_bar{
-    height: 70px;
+    height: 10vh;
     width: 100%;
     position: fixed;
     background-color: white;
@@ -12,7 +12,8 @@
 }
 
 .link_border{
-    height: 50px;
+    min-height: 7vh;
+    max-height: 10vh;
     border-left: 1px solid black;
 }
 
@@ -26,7 +27,7 @@
 
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
 
     cursor: pointer;
 }

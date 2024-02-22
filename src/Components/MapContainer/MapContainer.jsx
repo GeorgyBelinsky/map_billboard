@@ -4,9 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { createRoot } from 'react-dom/client';
 
 import marker_img from '../../assets/pngegg.png';
+import picture from '../../assets/picture.png';
 
 import PopupContent from '../PopUpContent/PopUpContent';
 import BuyForm from '../BuyForm/BuyForm';
+import SFS from '../SFS/SFS';
 
 const MapContainer = ({ markers , fetchData}) => {
     const mapPlacer = useRef(null);
@@ -35,7 +37,7 @@ const MapContainer = ({ markers , fetchData}) => {
             const popupContentNode = document.createElement('div');
             const reactRoot = createRoot(popupContentNode);
             reactRoot.render(
-            <PopupContent marker={marker} img={marker_img} setSelectedMarkers={setSelectedMarkers}/>
+            <PopupContent marker={marker} img={picture} setSelectedMarkers={setSelectedMarkers}/>
             );
 
             // Set the DOM node as the content of the Popup
@@ -82,7 +84,7 @@ const MapContainer = ({ markers , fetchData}) => {
     ];
 
     return (
-        <main style={{ width: "100%", height: "100vh" }}>
+        <main className="main_container">
             <div className="mapWrapper" ref={mapPlacer}></div>
 
             <div className="basemapsWrapper">
@@ -96,6 +98,7 @@ const MapContainer = ({ markers , fetchData}) => {
             </div>
 
             <BuyForm className="buy_button" selectedMarkers={selectedMarkers} setSelectedMarkers={setSelectedMarkers} markers={markers} fetchData={fetchData}/>
+            <SFS markers={markers}/>
         </main>
     );
 }

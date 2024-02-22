@@ -1,0 +1,25 @@
+.sfs_settings{
+    width: 100%;
+    height: fit-content;
+    border-radius: 15px;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+.search_bar{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding-left: 5px;
+}
+
+.search_option{
+    width: 100px;
+    border-radius: 15px;
+    border: 1px solid black;
+    height: 25px;
+}

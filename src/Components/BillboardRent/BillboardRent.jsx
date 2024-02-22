@@ -1,4 +1,4 @@
-import TEST_IMG from '../../assets/pngegg.png';
+import picture from '../../assets/picture.png';
 import DatePicker from 'react-datepicker';
 import { useState, useEffect } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -51,7 +51,7 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
     <div className="billboard_rent">
       <div className="text_container">
         <div className="board_top">
-          <img src={TEST_IMG} className="board_icon" />
+          <img src={picture} className="board_icon" />
           <div className="general_description">
             <div className="board_identificator">
               <div className="id_container">{board.billboardId}</div>
