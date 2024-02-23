@@ -32,30 +32,26 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
       });
     
       try {
-        const response = await fetch('https://bord.azurewebsites.net/api/Bord/RentBoard/', {
+        const response = await fetch('https://bord.azurewebsites.net/api/Bord/RentBoard', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: jsonString,
         });
-    
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-    
-        const result = await response.json();
 
+        if (!response.ok) {
+          throw new Error('Network response was not ok, ' + await response.json() );
+        }
+        
+        setSelectedMarkers([]);
+        await fetchData();
+        closeForm();
+        location.reload();
       } catch (error) {
         console.log(error);
       } 
     });
-    
-
-    setSelectedMarkers([]);
-    await fetchData();
-    closeForm();
-    location.reload();
   };
 
   useEffect(() => {

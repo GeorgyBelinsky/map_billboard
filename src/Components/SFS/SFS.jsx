@@ -7,6 +7,8 @@ import Sort_icon from "../../assets/sort.svg?react";
 import Close_icon from "../../assets/close.svg?react";
 
 import Search from "../SFS/Search/Search";
+import Filter from "../SFS/Filter/Filter";
+import Sort from "../SFS/Sort/Sort";
 
 const SFS = (markers) => {
     const [selectedComponent, setSelectedComponent] = useState(null);
@@ -34,14 +36,16 @@ const SFS = (markers) => {
 
             <div className="toolbar">
                 <div className={`toolbar_button ${selectedComponent==='search' ? 'selected' : ''}`}
-                 onClick={()=>showComponent('search')}>
+                onClick={()=>showComponent('search')}>
                     <Search_icon className={`toolbar_icon ${selectedComponent==='search' ? 'selected' : ''}`} />
                 </div>
-                <div className='toolbar_button' onClick={()=>showComponent('filter')}>
-                    <Filter_icon className="toolbar_icon" />
+                <div className={`toolbar_button ${selectedComponent==='filter' ? 'selected' : ''}`}
+                onClick={()=>showComponent('filter')}>
+                    <Filter_icon className={`toolbar_icon ${selectedComponent==='filter' ? 'selected' : ''}`}/>
                 </div>
-                <div className='toolbar_button' onClick={()=>showComponent('sort')}>
-                    <Sort_icon className="toolbar_icon" />
+                <div className={`toolbar_button ${selectedComponent==='sort' ? 'selected' : ''}`}
+                onClick={()=>showComponent('sort')}>
+                    <Sort_icon className={`toolbar_icon ${selectedComponent==='sort' ? 'selected' : ''}`} />
                 </div>
                 <div className='toolbar_button' onClick={()=>showComponent('clear')}>
                     <Close_icon className="toolbar_icon" />
