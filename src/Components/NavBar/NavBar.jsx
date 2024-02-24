@@ -38,7 +38,7 @@ const NavBar = () => {
                 <Link className="link" to="/support"><span className='link_border'/>Support</Link>
                 <Link className="link" to="/"><span className='link_border'/>Buy</Link>
                 {isAuthorized?<a className="link" onClick={handleLogOut}><span className='link_border'/>Log out</a> :
-                <Link className="link" to="/authorization"><span className='link_border'/>Login</Link>}
+                <Link className="link" to="/login"><span className='link_border'/>Login</Link>}
             </div>
         </div>
     );

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import stringifyDate from 'json-stringify-date';
 import "./index.css"
 import buy_img from "../../assets/buy.svg";
 import BillboardRent from "../BillboardRent/BillboardRent";
 
-const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => {
+const BuyForm = ({ selectedMarkers, setSelectedMarkers, markers, fetchData }) => {
   const [isFormVisible, setFormVisible] = useState(false);
   const [filteredBySelected, setFilteredBySelected] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
@@ -18,6 +19,12 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
     setFormVisible(false);
   };
 
+  const navigate = useNavigate();
+
+  function toLogin() {
+    return navigate("/login");
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,28 +37,33 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
         }
         return value;
       });
-    
-      try {
-        const response = await fetch('https://bord.azurewebsites.net/api/Bord/RentBoard', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-             Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-          body: jsonString,
-        });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok, ' + await response.json() );
+      try {
+        if (localStorage.getItem('token')) {
+          const response = await fetch('https://bord.azurewebsites.net/api/Bord/RentBoard', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: jsonString,
+          });
+
+          if (!response.ok) {
+            throw new Error('Network response was not ok, ' + await response.json());
+          }
+
+          setSelectedMarkers([]);
+          await fetchData();
+          closeForm();
+          location.reload();
+        } 
+        else{
+          toLogin();
         }
-        
-        setSelectedMarkers([]);
-        await fetchData();
-        closeForm();
-        location.reload();
       } catch (error) {
         console.log(error);
-      } 
+      }
     });
   };
 
@@ -72,7 +84,7 @@ const BuyForm = ({ selectedMarkers,setSelectedMarkers, markers, fetchData }) => 
             <form className="form_container" onSubmit={handleSubmit}>
               <div className="form_content_container">
                 {filteredBySelected?.map((board, index) =>
-                  <BillboardRent board={board} key={index} selectedDates={selectedDates} setSelectedDates={setSelectedDates}/>
+                  <BillboardRent board={board} key={index} selectedDates={selectedDates} setSelectedDates={setSelectedDates} />
                 )}
               </div>
               <div className="submit_area">

@@ -42,8 +42,9 @@ function App() {
     <>
       <NavBar />
       <Routes>
+        <Route path="/support"/>
         <Route path="/" element={<MapContainer markers={markers} fetchData={fetchData} />} />
-        <Route path="/authorization" element={<UserPage />} />
+        <Route path="/login" element={<UserPage />} />
       </Routes>
     </>
   )
