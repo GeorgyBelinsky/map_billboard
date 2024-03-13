@@ -1,30 +1,54 @@
-.sfs_container {
-    width: 330px;
-    height: 80%;
-
+.actions_container {
+    width: 350px;
+    height: 83vh;
     position: fixed;
-    top: 15%;
-    right: 10px;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    top: 16.5vh;
+    right: 5px;
+    z-index: 1;
 }
 
-.result_field{
+.results_field{
     background-color: white;
     border: 1px black solid;
     border-radius: 15px;
-    width: 280px;
-    height: 30%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+.result_container{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.result_container.search{
+    width: 100%;
+    height: calc(100% - 28px);
+    overflow-y: auto;
+}
+
+.result_container.filter{
+    width: 100%;
+    height: calc(100% - 80px);
+    overflow-y: auto;
+}
+
+.result_container.sort{
+    width: 100%;
+    height: calc(100% - 28px);
+    overflow-y: auto;
 }
 
 .toolbar{
-    height: 180px;
-    width: 40px;
+    position: fixed;
+    top: 10.5vh;
+    right: 5px;
+    z-index: 3;
+
+    height: 40px;
+    width: 180px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
 }
 
@@ -41,19 +65,19 @@
     cursor: pointer;
 }
 
+.toolbar_icon{
+    width: 28px;
+    height: 28px;
+}
+
 .toolbar_button:hover{
    background-color: black;
    transition: 500ms;
 }
 
-.toolbar_icon:hover{
+.toolbar_button:hover .toolbar_icon{
     fill: white;
     transition: 500ms;
-}
-
-.toolbar_icon{
-    width: 28px;
-    height: 28px;
 }
 
 .toolbar_button.selected {
@@ -71,7 +95,7 @@
     transition: 500ms;
  }
  
- .toolbar_icon.selected:hover{
+ .toolbar_button.selected:hover .toolbar_icon.selected{
      fill: black;
      transition: 500ms;
  }

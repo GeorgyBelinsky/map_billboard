@@ -8,16 +8,11 @@ import picture from '../../assets/picture.png';
 
 import PopupContent from '../PopUpContent/PopUpContent';
 import BuyForm from '../BuyForm/BuyForm';
-import SFS from '../SFS/SFS';
+import Actions from '../Actions/Actions';
 
 const MapContainer = ({ markers , fetchData}) => {
     const mapPlacer = useRef(null);
-    const [mapStyle, setMapStyle] = useState("arcgis/imagery");
     const [selectedMarkers, setSelectedMarkers]= useState([]); 
-
-    const handleMapStyleChange = (e) => {
-        setMapStyle(e.target.value);
-    };
 
     useEffect(() => {
         const apiKey = 'AAPK44735a5f9a8c49c293f06ef401365ee0iFKx_2d7TjmyQXPR7lHNCLBn5vZRKOIImFBYiTBmupsJuhuLcBmT2ULNUbApHsWV';
@@ -25,10 +20,14 @@ const MapContainer = ({ markers , fetchData}) => {
 
         const map = new maplibregl.Map({
             container: mapPlacer.current,
-            style: `${basemapStyleURL}${mapStyle}?token=${apiKey}`,
+            style: `${basemapStyleURL}${"arcgis/navigation"}?token=${apiKey}`,
             center: [50, 50],
             zoom: 1,
         });
+
+        const openPopup = () => {
+            
+        }
 
         markers?.forEach((marker) => {
             const popup = new maplibregl.Popup();
@@ -43,15 +42,14 @@ const MapContainer = ({ markers , fetchData}) => {
             // Set the DOM node as the content of the Popup
             popup.setDOMContent(popupContentNode);
 
-            new maplibregl.Marker({ element: customMarker(), })
-                .setLngLat([marker.longitude, marker.latitude])
-                .setPopup(popup)
-                .addTo(map);
-
+            const markerInstance = new maplibregl.Marker({ element: customMarker(), })
+            .setLngLat([marker.longitude, marker.latitude])
+            .setPopup(popup)
+            .addTo(map);
         });
 
         return () => map.remove();
-    }, [mapStyle, markers]);
+    }, [markers]);
 
     const customMarker = () => {
         const imgMarker = document.createElement('img');
@@ -63,42 +61,12 @@ const MapContainer = ({ markers , fetchData}) => {
         return imgMarker;
     };
 
-    const basemapOptions = [
-        "arcgis/outdoor",
-        "arcgis/community",
-        "arcgis/navigation",
-        "arcgis/streets",
-        "arcgis/streets-relief",
-        "arcgis/imagery",
-        "arcgis/oceans",
-        "arcgis/topographic",
-        "arcgis/light-gray",
-        "arcgis/dark-gray",
-        "arcgis/human-geography",
-        "arcgis/charted-territory",
-        "arcgis/nova",
-        "osm/standard",
-        "osm/navigation",
-        "osm/streets",
-        "osm/blueprint",
-    ];
-
     return (
         <main className="main_container">
             <div className="mapWrapper" ref={mapPlacer}></div>
-
-            <div className="basemapsWrapper">
-                <select onChange={handleMapStyleChange} value={mapStyle} className="basemaps">
-                    {basemapOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <BuyForm className="buy_button" selectedMarkers={selectedMarkers} setSelectedMarkers={setSelectedMarkers} markers={markers} fetchData={fetchData}/>
-            <SFS markers={markers}/>
+            <BuyForm selectedMarkers={selectedMarkers} setSelectedMarkers={setSelectedMarkers} 
+            markers={markers} fetchData={fetchData}/>
+            <Actions markers={markers}/>
         </main>
     );
 }

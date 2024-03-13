@@ -1,6 +1,6 @@
-.sfs_settings{
+.search_settings{
     width: 100%;
-    height: fit-content;
+    height: 28px;
     border-radius: 15px;
     border-bottom: 1px solid black;
     display: flex;
@@ -17,9 +17,19 @@
     padding-left: 5px;
 }
 
-.search_option{
+.search_button{
     width: 100px;
     border-radius: 15px;
     border: 1px solid black;
-    height: 25px;
+    height: 100%;
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search_button:hover{
+    background-color: black;
+    color: white;
+    transition: 500ms;
 }

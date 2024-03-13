@@ -1,13 +1,13 @@
-.buy_button{
-  position: absolute;
-  height: 30px;
+.buy_form{
+  position: fixed;
+  height: 40px; 
 
   background-color: white;
   border: 1px black solid;
-  border-radius: 15px;
+  border-radius: 50px;
 
   top: 10.5vh;
-  right: 210px;
+  right: 190px;
   z-index: 2;
 
   display: flex;
@@ -16,9 +16,20 @@
   font-family: sans-serif;
 }
 
-.button_content {
-  padding: 0;
-  padding-right: 5px;
+.buy_button:hover,
+.buy_button:hover .buy_icon_container{
+  border-radius: 50px;
+  background-color: black;
+  color: gold;
+  transition: 1000ms;
+}
+
+.buy_button:hover .buy_icon_container{
+  fill: gold;
+}
+
+.buy_button {
+  padding: 0 5px 0 0;
 
   border: none;
 
@@ -79,11 +90,9 @@
   height: 100px;
 }
 
-
-
 .buy_icon_container{
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
 }
 
 .submit_area{
@@ -94,6 +103,16 @@
   gap: 10px;
   padding: 10px;
   padding-top: 40px;
+}
+
+.confirm_button{
+  cursor: pointer;
+}
+
+.confirm_button:hover{
+  color: white;
+  background-color: black;
+  transition: 500ms;
 }
 
 .summary{

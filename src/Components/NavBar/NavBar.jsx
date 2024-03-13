@@ -35,10 +35,10 @@ const NavBar = () => {
         <div className="nav_bar">
             <img className='logo_container' src={logo_img} />
             <div className='links_container'>
-                <Link className="link" to="/support"><span className='link_border'/>Support</Link>
-                <Link className="link" to="/"><span className='link_border'/>Buy</Link>
-                {isAuthorized?<a className="link" onClick={handleLogOut}><span className='link_border'/>Log out</a> :
-                <Link className="link" to="/login"><span className='link_border'/>Login</Link>}
+                <Link className="link" to="/support">Support</Link>
+                <Link className="link" to="/">Buy</Link>
+                {isAuthorized?<a className="link" onClick={handleLogOut}>Log out</a> :
+                <Link className="link" to="/login">Login</Link>}
             </div>
         </div>
     );

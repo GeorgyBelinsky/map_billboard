@@ -5,12 +5,12 @@ import "./index.css";
 const Sort = (markers) => {
     const [billboards, setBillboards] = useState(markers);
     const [selectedField, setSelectedField] = useState();
-    const [searchOptions, setSearchOptions] = useState(['description', 'address', 'price']);
+    const [searchOptions, setSearchOptions] = useState(['rate', 'price']);
 
     return (
-        <div className="sfs_settings">
-            <p>Sorting options:</p>
+        <div className="sort_settings">
             <div className="settings_container">
+            <p>Sorting options:</p>
                 <div className="sort_bar">
                     <img src={sort_by_icon} />
                 </div>

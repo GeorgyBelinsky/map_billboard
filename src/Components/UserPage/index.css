@@ -37,4 +37,11 @@
     border-radius: 15px;
     width: 120px;
     background-color: white;
+    cursor: pointer;
+}
+
+.submit_button:hover{
+    background-color: black;
+    color: white;
+    transition: 500ms;
 }

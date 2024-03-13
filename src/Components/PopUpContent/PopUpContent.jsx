@@ -23,7 +23,7 @@ const PopUpContent = ({ marker, img, setSelectedMarkers }) => {
       <img className="photo" src={img} />
       <p className="description"> {marker.description}</p>
       <div className="buy_zone">
-        <p className="price">{marker.dayCoast}$/day</p>
+        <p className="price">{marker.dayCost}$/day</p>
         <label className="add_to_cart" onChange={handleCheckboxChange}>
           <input type="checkbox" className="is_selected" />
           <img className="cart_img" src={cart_img} />

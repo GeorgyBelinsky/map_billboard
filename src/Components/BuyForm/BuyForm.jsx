@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import stringifyDate from 'json-stringify-date';
 import "./index.css"
-import buy_img from "../../assets/buy.svg";
+import Buy_icon from "../../assets/buy.svg?react";
 import BillboardRent from "../BillboardRent/BillboardRent";
 
 const BuyForm = ({ selectedMarkers, setSelectedMarkers, markers, fetchData }) => {
@@ -72,9 +72,9 @@ const BuyForm = ({ selectedMarkers, setSelectedMarkers, markers, fetchData }) =>
   }, [selectedMarkers])
 
   return (
-    <div className="buy_button">
-      <button onClick={openForm} className="button_content">
-        <img src={buy_img} className="buy_icon_container" />Selected: {selectedMarkers.length}
+    <div className="buy_form">
+      <button onClick={openForm} className="buy_button">
+        <Buy_icon className="buy_icon_container" />Selected: {selectedMarkers.length}
       </button>
 
       {isFormVisible && (

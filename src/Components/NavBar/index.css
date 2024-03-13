@@ -11,7 +11,7 @@
     font-family:sans-serif;
 }
 
-.link_border{
+.AAAAAAAAAAA{
     min-height: 7vh;
     max-height: 10vh;
     border-left: 1px solid black;
@@ -21,15 +21,21 @@
     text-decoration: none;
 
     width: 100px;
-    height: 70px;
+    height: 8vh;
+
+    border-left: 1px solid black;
 
     color: black;
-
     display: flex;
     align-items: center;
     justify-content: space-around;
 
     cursor: pointer;
+}
+
+.link:hover{
+    background-color: rgb(210, 210, 210);
+    transition: 500ms;
 }
 
 .links_container{
