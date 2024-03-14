@@ -36,7 +36,7 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
     });
 
     const daysDifference = Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24)) + 1 - filteredDates.length;
-    setDayCostSum(date2 != null ? daysDifference * board.dayCoast : 0);
+    setDayCostSum(date2 != null ? daysDifference * board.dayCost : 0);
   }, [selectedDates])
 
 
@@ -60,7 +60,7 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
             <div className="coordinates_container">
               {"coordinates: " + board.latitude + " | " + board.longitude}
             </div>
-            <p className="price">{board.dayCoast}$/day</p>
+            <p className="price">{board.dayCost}$/day</p>
           </div>
         </div>
         <div className="description_container">{board.description}</div>
