@@ -1,7 +1,7 @@
 .result_field{
-    height:100px;
+    height:110px;
     width:100%;
-    padding: 0px 5px 5px 15px;
+    padding: 0px 0px 5px 10px;
     display: flex;
     align-items: center;
     font-family: sans-serif;
@@ -9,8 +9,8 @@
 }
 
 .billboard_image{
-    height: 80px;
-    width: 120px;
+    height: 95px;
+    width: 130px;
 }
 
 .general_info{
@@ -22,19 +22,19 @@
 }
 
 .header_info{
-    display: -webkit-box;
-    -webkit-box-orient: horizontal;
-    -webkit-line-clamp: 2;
-
-    word-break: break-all;
-    font-size: medium;
-
-    text-align: left;
+    width: 100%;
 }
 
 .price{
     border-radius: 50px;
-    height: 25px;
+    float: left;
+    font-size: small;
+    margin-right: 5px;
+}
+
+.address_text{
+    word-break: break-all;
+    font-size: medium;
 }
 
 .description_result{

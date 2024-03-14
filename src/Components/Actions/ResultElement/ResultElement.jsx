@@ -13,7 +13,7 @@ const ResultElement = (billboard) => {
             <div className="general_info">
                 <div className="header_info">
                     <div className="price">{billboard?.marker.dayCost + "$"}</div>
-                    <p>{billboard?.marker.adress}</p>
+                    <p className="address_text">{billboard?.marker.adress}</p>
                 </div>
                 <p className="description_result">{billboard?.marker.description}</p>
             </div>
