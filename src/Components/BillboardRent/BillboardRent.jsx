@@ -52,21 +52,23 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
       <div className="text_container">
         <div className="board_top">
           <div className="general_description">
-            <div className="board_identificator">
-              <div className="id_container">{board.billboardId}</div>
-              <div className="title_container">{board.adress}</div>
-            </div>
+            <p className="price">{board.dayCost}$/day</p>
             <div className="coordinates_container">
               {"coordinates: " + board.latitude + " | " + board.longitude}
             </div>
-            <p className="price">{board.dayCost}$/day</p>
+            <div className="board_identificator">
+              <div className="title_container">{board.adress}</div>
+              <div className="id_container">{board.billboardId}</div>
+            </div>
           </div>
-          <img src={picture} className="board_icon" />
+          <img src={picture} className="board_image" />
         </div>
-        <div className="description_container">{board.description}</div>
+        <div className="description_container">
+          <p>{board.description}</p>
+        </div>
         <div className="calc_price">Your price:
-          <p>{dayCostSum}$</p>
-        </div>
+            <p>{dayCostSum}$</p>
+          </div>
       </div>
       <div className="date_pick_continer">
         <DatePicker
