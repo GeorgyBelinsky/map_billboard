@@ -10,9 +10,12 @@ import PopupContent from '../PopUpContent/PopUpContent';
 import BuyForm from '../BuyForm/BuyForm';
 import Actions from '../Actions/Actions';
 
-const MapContainer = ({ markers , fetchData}) => {
+const MapContainer = ({ markers, fetchData }) => {
     const mapPlacer = useRef(null);
-    const [selectedMarkers, setSelectedMarkers]= useState([]); 
+    const [selectedMarkers, setSelectedMarkers] = useState([]);
+    const [mapInstance, setMapInstance] = useState(null); // State to store map instance
+    const [markerInstances, setMarkerInstances] = useState([]); // State to store marker instances
+    const [currentPopup, setCurrentPopup] = useState(null); // State to store the currently open popup
 
     useEffect(() => {
         const apiKey = 'AAPK44735a5f9a8c49c293f06ef401365ee0iFKx_2d7TjmyQXPR7lHNCLBn5vZRKOIImFBYiTBmupsJuhuLcBmT2ULNUbApHsWV';
@@ -25,28 +28,28 @@ const MapContainer = ({ markers , fetchData}) => {
             zoom: 1,
         });
 
-        const openPopup = () => {
-            
-        }
+        // Set the map instance in state
+        setMapInstance(map);
 
-        markers?.forEach((marker) => {
+        const markerInstancesArray = markers?.map(marker => {
             const popup = new maplibregl.Popup();
-
-            // Convert the React component to a DOM node
             const popupContentNode = document.createElement('div');
             const reactRoot = createRoot(popupContentNode);
             reactRoot.render(
-            <PopupContent marker={marker} img={picture} setSelectedMarkers={setSelectedMarkers}/>
+                <PopupContent marker={marker} img={picture} setSelectedMarkers={setSelectedMarkers} />
             );
-
-            // Set the DOM node as the content of the Popup
             popup.setDOMContent(popupContentNode);
 
             const markerInstance = new maplibregl.Marker({ element: customMarker(), })
-            .setLngLat([marker.longitude, marker.latitude])
-            .setPopup(popup)
-            .addTo(map);
+                .setLngLat([marker.longitude, marker.latitude])
+                .setPopup(popup)
+                .addTo(map);
+            
+            return markerInstance;
         });
+
+        // Store the marker instances in state
+        setMarkerInstances(markerInstancesArray);
 
         return () => map.remove();
     }, [markers]);
@@ -57,16 +60,40 @@ const MapContainer = ({ markers , fetchData}) => {
         imgMarker.alt = 'Billboard';
         imgMarker.style.width = '50px';
         imgMarker.style.height = '50px';
-
         return imgMarker;
     };
+
+    const openPopup = (markerId) => {
+        const marker = markers?.find(marker => marker.billboardId === markerId);
+
+        if (mapInstance && marker) {
+            // Find the corresponding marker instance
+            const markerInstance = markerInstances.find(instance => instance.getLngLat().toArray().toString() === [marker.longitude, marker.latitude].toString());
+    
+            if (markerInstance) {
+                const popup = markerInstance.getPopup();
+    
+                // Close any previously opened popup
+                if (currentPopup) {
+                    currentPopup.remove();
+                }
+    
+                // If the popup exists, open it
+                if (popup) {
+                    popup.addTo(mapInstance);
+                    setCurrentPopup(popup); // Set the current popup
+                }
+            }
+        }
+    };
+    
 
     return (
         <main className="main_container">
             <div className="mapWrapper" ref={mapPlacer}></div>
-            <BuyForm selectedMarkers={selectedMarkers} setSelectedMarkers={setSelectedMarkers} 
-            markers={markers} fetchData={fetchData}/>
-            <Actions markers={markers}/>
+            <BuyForm selectedMarkers={selectedMarkers} setSelectedMarkers={setSelectedMarkers}
+                markers={markers} fetchData={fetchData} />
+            <Actions markers={markers} openPopup={openPopup} />
         </main>
     );
 }

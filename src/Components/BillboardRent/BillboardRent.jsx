@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './index.css';
 
 const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
-  const [dayCostSum,setDayCostSum] =  useState(0);
+  const [dayCostSum, setDayCostSum] = useState(0);
 
   const setDates = (dates) => {
     const [start, end] = dates;
@@ -51,7 +51,6 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
     <div className="billboard_rent">
       <div className="text_container">
         <div className="board_top">
-          <img src={picture} className="board_icon" />
           <div className="general_description">
             <div className="board_identificator">
               <div className="id_container">{board.billboardId}</div>
@@ -62,8 +61,12 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
             </div>
             <p className="price">{board.dayCost}$/day</p>
           </div>
+          <img src={picture} className="board_icon" />
         </div>
         <div className="description_container">{board.description}</div>
+        <div className="calc_price">Your price:
+          <p>{dayCostSum}$</p>
+        </div>
       </div>
       <div className="date_pick_continer">
         <DatePicker
@@ -75,9 +78,6 @@ const BillboardRent = ({ board, selectedDates, setSelectedDates }) => {
           selectsRange
           inline
         />
-          <div className="calc_price">Your price:
-          <p>{dayCostSum}$</p>
-        </div>
       </div>
     </div>
   );

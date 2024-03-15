@@ -11,7 +11,7 @@ import Filter from "./Filter/Filter";
 import Sort from "./Sort/Sort";
 import ResultElement from "./ResultElement/ResultElement";
 
-const Actions = ({markers}) => {
+const Actions = ({markers, openPopup}) => {
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [billboardsSelected, setBillboardsSelected] = useState(null);
 
@@ -89,7 +89,7 @@ const Actions = ({markers}) => {
 
                 <div className={`result_container ${selectedComponent ? selectedComponent : ''}`}>
                     {billboardsSelected?.map((marker) => (
-                        <ResultElement marker={marker} key={marker.id} />
+                        <ResultElement billboard={marker} openPopup={openPopup} key={marker.billboardId} />
                     ))}
                 </div>
             </div>
