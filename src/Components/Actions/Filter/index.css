@@ -11,7 +11,7 @@
 }
 
 .slider_container {
-    width: 90%;
+    width: 330px;
     height: 50px;
     display: flex;
     align-items: center;
@@ -47,6 +47,14 @@
 .rc-slider-handle:active,
 .rc-slider-handle:focus {
     border-color: rgb(125, 125, 125) !important;
+}
+
+.rc-slider-mark {
+    display: none; /* Hide the marks */
+}
+
+.rc-slider-dot-active{
+    border-color: black !important;
 }
 
 .bottom_section{

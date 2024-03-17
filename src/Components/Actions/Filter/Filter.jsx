@@ -3,8 +3,8 @@ import "./index.css";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const Filter = ({filterBillboards}) => {
-    //const [prices, setPrices] = useState([]);
+const Filter = ({ filterBillboards }) => {
+    const [prices, setPrices] = useState([]);
     const [values, setValues] = useState([]);
     const [startValues, setStartValues] = useState([]);
     const handleChange = (values) => {
@@ -21,7 +21,7 @@ const Filter = ({filterBillboards}) => {
 
             const result = await response.json();
 
-            //etPrices(result);
+            setPrices(result);
             setValues([Math.min(...result), Math.max(...result)]);
             setStartValues([Math.min(...result), Math.max(...result)]);
         } catch (error) {
@@ -33,21 +33,29 @@ const Filter = ({filterBillboards}) => {
         fetchPrices();
     }, []);
 
+    const marks = prices.reduce((acc, price) => {
+        acc[price] = `${price}$`;
+        return acc;
+    }, {});
+
     return (
         <div className="filter_settings">
             <div className="slider_container">
                 {startValues.length > 0 ? (
                     <Slider
-                        range
-                        min={startValues[0]}
-                        max={startValues[1]}
-                        step={1}
-                        defaultValue={startValues}
-                        onChange={handleChange}
-                    />
+                    range
+                    min={startValues[0]}
+                    max={startValues[1]}
+                    step={null}
+                    defaultValue={startValues}
+                    onChange={handleChange}
+                    marks={marks} // Use the marks object here
+                />
+                
                 ) : (
-                    <p>Loading...</p>
+                    <p>loading price slider...</p>
                 )}
+
                 <div className="price_range">
                     <p className="price_input">{values[0]}$</p>
                     <p className="price_input">{values[1]}$</p>
