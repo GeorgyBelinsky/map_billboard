@@ -90,7 +90,7 @@ const MapContainer = ({ markers, fetchData }) => {
                     // Zoom in on the map
                     mapInstance.flyTo({
                         center: [marker.longitude, marker.latitude],
-                        zoom: 8, // Set the desired zoom level
+                        zoom: 15, // Set the desired zoom level
                         essential: true // Animation is considered essential and will not be canceled during user interaction.
                     });
                 }
