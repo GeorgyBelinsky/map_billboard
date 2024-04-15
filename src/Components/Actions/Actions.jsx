@@ -25,7 +25,7 @@ const Actions = ({markers, openPopup}) => {
 
     const searchBillboards = async (address) => {
         try {
-            const response = await fetch(`https://bord.azurewebsites.net/api/Bord/Find_Boards?adress=${address}`);
+            const response = await fetch(`https://bord.azurewebsites.net/api/Bord/FindBoards?adress=${address}`);
       
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -40,7 +40,25 @@ const Actions = ({markers, openPopup}) => {
 
     const filterBillboards = async (min_value, max_value) =>{
         try {
-            const response = await fetch(`https://bord.azurewebsites.net/api/Bord/Get filtered boards?minCost=${min_value}&maxCost=${max_value}`);
+            const response = await fetch(`https://bord.azurewebsites.net/api/Bord/GetFilteredBoards?minCost=${min_value}&maxCost=${max_value}`);
+      
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+      
+            const result = await response.json();
+            setBillboardsSelected(result);
+          } catch (error) {
+            console.log(error);
+          }
+    }
+
+    const sortBillboards = async (field,direction) =>{
+        try {
+            var response = await fetch(`https://bord.azurewebsites.net/api/Bord/BoardCostSort?sortParam=${direction === 'descending' ? true : false}`);
+            if(field==='rate'){
+                response = await fetch(`https://bord.azurewebsites.net/api/Bord/BoardSortPopularity`);
+            }
       
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -84,7 +102,7 @@ const Actions = ({markers, openPopup}) => {
             <div className="results_field">
                 {selectedComponent === 'search' && <Search searchBillboards={searchBillboards}/>}
                 {selectedComponent === 'filter' && <Filter filterBillboards = {filterBillboards}/>}
-                {selectedComponent === 'sort' && <Sort />}
+                {selectedComponent === 'sort' && <Sort sortBillboards={sortBillboards}/>}
                 {selectedComponent === null && <></>}
 
                 <div className={`result_container ${selectedComponent ? selectedComponent : ''}`}>
