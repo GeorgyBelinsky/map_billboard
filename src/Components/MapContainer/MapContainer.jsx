@@ -91,7 +91,8 @@ const MapContainer = ({ markers, fetchData }) => {
                     mapInstance.flyTo({
                         center: [marker.longitude, marker.latitude],
                         zoom: 15, // Set the desired zoom level
-                        essential: true // Animation is considered essential and will not be canceled during user interaction.
+                        essential: true, // Animation is considered essential and will not be canceled during user interaction.
+                        duration: 1000 // Set the duration in milliseconds (e.g., 1000 milliseconds for 1 second)
                     });
                 }
             }
