@@ -1,21 +1,35 @@
 import { useState } from "react";
-import sort_by_icon from "../../../assets/sort_by.svg";
+import Sort_by_icon from "../../../assets/sort_by.svg?react";
 import "./index.css";
 
-const Sort = (markers) => {
-    const [billboards, setBillboards] = useState(markers);
-    const [selectedField, setSelectedField] = useState();
-    const [searchOptions, setSearchOptions] = useState(['rate', 'price']);
+const Sort = ({sortBillboards}) => {
+    const [selectedField, setSelectedField] = useState('price');
+    const [direction, setDirection ] = useState('descending');
+    const [sortOptions, setSortOptions] = useState(['rate', 'price']);
+
+    const changeDirection = () =>{
+        if(direction==='descending'){
+            setDirection('ascending');
+        }else{
+            setDirection('descending');
+        }
+        sortBillboards(selectedField, direction);
+    }
+
+    const changeSortSetting = (e) =>{
+        setSelectedField(e.target.value);
+        sortBillboards(e.target.value, direction);
+    }
 
     return (
         <div className="sort_settings">
             <div className="settings_container">
             <p>Sorting options:</p>
-                <div className="sort_bar">
-                    <img src={sort_by_icon} />
+                <div className="sort_bar" onClick={()=>changeDirection()}>
+                    <Sort_by_icon className="sort_icon"/>
                 </div>
-                <select onChange={() => { }} value={selectedField} className="sort_option">
-                    {searchOptions.map((option) => (
+                <select onChange={changeSortSetting} value={selectedField} className="sort_option">
+                    {sortOptions.map((option) => (
                         <option key={option} value={option}>
                             {option}
                         </option>

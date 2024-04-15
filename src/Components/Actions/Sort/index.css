@@ -24,6 +24,27 @@
     height: 25px;
     width: 25px;
     padding: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.sort_icon{
+    width: 20px;
+    height:20px;
+}
+
+.sort_bar:hover{
+    background-color: black;
+    transition: 700ms;
+}
+
+.sort_bar:hover .sort_icon{
+    fill: white;
+    transition: 700ms;
 }
 
 .settings_container{
