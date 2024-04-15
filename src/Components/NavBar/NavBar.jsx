@@ -24,12 +24,7 @@ const NavBar = () => {
         return () => {
           window.removeEventListener('storage', handleStorageChange);
         };
-      }, []);
-
-    const handleLogOut=()=>{
-        localStorage.clear();
-        setIsAuthorized(false);
-    }
+      }, [localStorage]);
 
     return (
         <div className="nav_bar">
@@ -37,7 +32,7 @@ const NavBar = () => {
             <div className='links_container'>
                 <Link className="link" to="/support">Support</Link>
                 <Link className="link" to="/">Buy</Link>
-                {isAuthorized?<a className="link" onClick={handleLogOut}>Log out</a> :
+                {isAuthorized?<Link className='link' to="/user">User info</Link> :
                 <Link className="link" to="/login">Login</Link>}
             </div>
         </div>
