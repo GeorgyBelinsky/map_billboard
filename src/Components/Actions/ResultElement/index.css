@@ -8,10 +8,35 @@
     overflow-x: hidden;
 }
 
-.billboard_image{
+.billboard_image {
     height: 95px;
     width: 130px;
+    cursor: pointer;
 }
+
+.image_container {
+    height: 95px;
+    width: 130px;
+    overflow: hidden;
+}
+
+.billboard_image img {
+    width: 100%;
+    height: 100%;
+}
+
+.billboard_image figure img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+.billboard_image figure:hover img {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+}
+
 
 .general_info{
     width: 100%;
