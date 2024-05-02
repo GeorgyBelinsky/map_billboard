@@ -16,7 +16,7 @@ jobs:
     name: Build and Deploy Job
     steps:
       - name: Set up environment variables
-        uses: "spicyj/dotenv@v1"
+        uses: "Azure/dotenv@v1"
         with:
           path: .env
       - uses: actions/checkout@v3
