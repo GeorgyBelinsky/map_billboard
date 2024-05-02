@@ -8,7 +8,7 @@ const UserPage = () => {
 
     const registerUser = async (userData) => {
         try {
-            const response = await fetch('https://bord.azurewebsites.net/api/User/Register', {
+            const response = await fetch('https://billboards-backend.azurewebsites.net/api/User/Register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const UserPage = () => {
 
     const authUser = async (credentials) => {
         try {
-            const response = await fetch('https://bord.azurewebsites.net/api/User/authenticate', {
+            const response = await fetch('https://billboards-backend.azurewebsites.net/api/User/authenticate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

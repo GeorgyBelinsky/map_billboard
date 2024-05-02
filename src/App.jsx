@@ -10,9 +10,9 @@ import { useState, useEffect } from 'react';
 function App() {
   const [markers, setMarkers] = useState(null);
 
-  const fetchData = async () => {
+   const fetchData = async () => {
     try {
-      const response = await fetch('https://bord.azurewebsites.net/api/Bord/BoardDetails');
+      const response = await fetch('https://billboards-backend.azurewebsites.net/api/Bord/BoardDetails');
 
       if (!response.ok) {
         throw new Error('Network response was not ok');

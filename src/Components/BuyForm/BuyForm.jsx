@@ -40,7 +40,7 @@ const BuyForm = ({ selectedMarkers, setSelectedMarkers, markers, fetchData }) =>
 
       try {
         if (localStorage.getItem('token')) {
-          const response = await fetch('https://bord.azurewebsites.net/api/Bord/RentBoard', {
+          const response = await fetch('https://billboards-backend.azurewebsites.net/api/Bord/RentBoard', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

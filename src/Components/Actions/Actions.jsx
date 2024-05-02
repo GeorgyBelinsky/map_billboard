@@ -25,7 +25,7 @@ const Actions = ({markers, openPopup}) => {
 
     const searchBillboards = async (address) => {
         try {
-            const response = await fetch(`https://bord.azurewebsites.net/api/Bord/FindBoards?adress=${address}`);
+            const response = await fetch(`https://billboards-backend.azurewebsites.net/api/Bord/FindBoards?adress=${address}`);
       
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ const Actions = ({markers, openPopup}) => {
 
     const filterBillboards = async (min_value, max_value) =>{
         try {
-            const response = await fetch(`https://bord.azurewebsites.net/api/Bord/GetFilteredBoards?minCost=${min_value}&maxCost=${max_value}`);
+            const response = await fetch(`https://billboards-backend.azurewebsites.net/api/Bord/GetFilteredBoards?minCost=${min_value}&maxCost=${max_value}`);
       
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -55,9 +55,9 @@ const Actions = ({markers, openPopup}) => {
 
     const sortBillboards = async (field,direction) =>{
         try {
-            var response = await fetch(`https://bord.azurewebsites.net/api/Bord/BoardCostSort?sortParam=${direction === 'descending' ? true : false}`);
+            var response = await fetch(`https://billboards-backend.azurewebsites.net/api/Bord/BoardCostSort?sortParam=${direction === 'descending' ? true : false}`);
             if(field==='rate'){
-                response = await fetch(`https://bord.azurewebsites.net/api/Bord/BoardSortPopularity`);
+                response = await fetch(`https://billboards-backend.azurewebsites.net/api/Bord/BoardSortPopularity`);
             }
       
             if (!response.ok) {

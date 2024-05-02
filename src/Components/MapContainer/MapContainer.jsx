@@ -18,12 +18,11 @@ const MapContainer = ({ markers, fetchData }) => {
     const [currentPopup, setCurrentPopup] = useState(null); // State to store the currently open popup
 
     useEffect(() => {
-        const apiKey = 'AAPK44735a5f9a8c49c293f06ef401365ee0iFKx_2d7TjmyQXPR7lHNCLBn5vZRKOIImFBYiTBmupsJuhuLcBmT2ULNUbApHsWV';
         const basemapStyleURL = `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/`;
 
         const map = new maplibregl.Map({
             container: mapPlacer.current,
-            style: `${basemapStyleURL}${"arcgis/navigation"}?token=${apiKey}`,
+            style: `${basemapStyleURL}${"arcgis/navigation"}?token=${import.meta.env.VITE_APP_API_KEY}`,
             center: [50, 50],
             zoom: 1,
         });

@@ -13,7 +13,7 @@ const Filter = ({ filterBillboards }) => {
 
     const fetchPrices = async () => {
         try {
-            const response = await fetch('https://bord.azurewebsites.net/api/Bord/GetFilteredCostList');
+            const response = await fetch('https://billboards-backend.azurewebsites.net/api/Bord/GetFilteredCostList');
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
