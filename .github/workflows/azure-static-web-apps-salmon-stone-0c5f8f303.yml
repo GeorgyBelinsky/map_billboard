@@ -35,6 +35,12 @@ jobs:
         env: # Add environment variables here
           # Inject secrets at build time from GitHub Secrets
           VITE_APP_API_KEY : ${{ secrets.VITE_APP_API_KEY }}
+        navigationFallback:
+          rewrite: /index.html
+          exclude:
+            - /images/*.{png,jpg,gif}
+            - /css/*
+
           
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
