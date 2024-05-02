@@ -34,7 +34,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env: # Add environment variables here
           # Inject secrets at build time from GitHub Secrets
-          myvarvalue:'VITE_APP_API_KEY'
+          VITE_APP_API_KEY : ${{ secrets.VITE_APP_API_KEY }}
           
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
