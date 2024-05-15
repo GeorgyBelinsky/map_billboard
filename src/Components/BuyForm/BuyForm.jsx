@@ -9,7 +9,6 @@ const BuyForm = ({ selectedMarkers, setSelectedMarkers, markers, fetchData }) =>
   const [isFormVisible, setFormVisible] = useState(false);
   const [filteredBySelected, setFilteredBySelected] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
-  const [summ, setSumm] = useState(0);
 
   const openForm = () => {
     setFormVisible(true);
