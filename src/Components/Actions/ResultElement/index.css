@@ -10,13 +10,13 @@
 
 .billboard_image {
     height: 95px;
-    width: 130px;
+    width: 145px;
     cursor: pointer;
 }
 
 .image_container {
     height: 95px;
-    width: 130px;
+    width: 145px;
     overflow: hidden;
 }
 
@@ -26,14 +26,11 @@
 }
 
 .billboard_image figure img {
-    -webkit-transform: scale(1);
     transform: scale(1);
-    -webkit-transition: .3s ease-in-out;
     transition: .3s ease-in-out;
 }
 
 .billboard_image figure:hover img {
-    -webkit-transform: scale(1.3);
     transform: scale(1.3);
 }
 
