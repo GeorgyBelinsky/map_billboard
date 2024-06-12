@@ -11,73 +11,59 @@ import Filter from "./Filter/Filter";
 import Sort from "./Sort/Sort";
 import ResultElement from "./ResultElement/ResultElement";
 
-const Actions = ({markers, openPopup}) => {
+const Actions = ({ markers, openPopup }) => {
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [billboardsSelected, setBillboardsSelected] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // Loading state
 
     const showComponent = (component) => {
-        if (selectedComponent != component) {
+        if (selectedComponent !== component) {
             setSelectedComponent(component);
         } else {
             setSelectedComponent(null);
         }
-    }
+    };
 
-    const searchBillboards = async (address) => {
+    const fetchData = async (url) => {
+        setIsLoading(true);
         try {
-            const response = await fetch(`https://billboards-backend.azurewebsites.net/api/Bord/FindBoards?adress=${address}`);
-      
+            const response = await fetch(url);
             if (!response.ok) {
-              throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok');
             }
-      
             const result = await response.json();
             setBillboardsSelected(result);
-          } catch (error) {
-            console.log(error);
-          }
-    }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-    const filterBillboards = async (min_value, max_value) =>{
-        try {
-            const response = await fetch(`https://billboards-backend.azurewebsites.net/api/Bord/GetFilteredBoards?minCost=${min_value}&maxCost=${max_value}`);
-      
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-      
-            const result = await response.json();
-            setBillboardsSelected(result);
-          } catch (error) {
-            console.log(error);
-          }
-    }
+    const searchBillboards = (address) => {
+        fetchData(`https://billboards-backend.azurewebsites.net/api/Bord/FindBoards?adress=${address}`);
+    };
 
-    const sortBillboards = async (field,direction) =>{
-        try {
-            var response = await fetch(`https://billboards-backend.azurewebsites.net/api/Bord/BoardCostSort?sortParam=${direction === 'descending' ? true : false}`);
-            if(field==='rate'){
-                response = await fetch(`https://billboards-backend.azurewebsites.net/api/Bord/BoardSortPopularity`);
-            }
-      
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-      
-            const result = await response.json();
-            setBillboardsSelected(result);
-          } catch (error) {
-            console.log(error);
-          }
-    }
+    const filterBillboards = (min_value, max_value) => {
+        fetchData(`https://billboards-backend.azurewebsites.net/api/Bord/GetFilteredBoards?minCost=${min_value}&maxCost=${max_value}`);
+    };
+
+    const sortBillboards = (field, direction) => {
+        let url = `https://billboards-backend.azurewebsites.net/api/Bord/BoardCostSort?sortParam=${direction === 'descending' ? true : false}`;
+        if (field === 'rate') {
+            url = `https://billboards-backend.azurewebsites.net/api/Bord/BoardSortPopularity`;
+        }
+        fetchData(url);
+    };
 
     const clearSettings = () => {
         setBillboardsSelected(markers);
         setSelectedComponent(null);
-    }
+    };
 
     useEffect(() => {
         setBillboardsSelected(markers);
+        setIsLoading(false); // Set loading to false once markers are set
     }, [markers]);
 
     return (
@@ -100,15 +86,19 @@ const Actions = ({markers, openPopup}) => {
                 </div>
             </div>
             <div className="results_field">
-                {selectedComponent === 'search' && <Search searchBillboards={searchBillboards}/>}
-                {selectedComponent === 'filter' && <Filter filterBillboards = {filterBillboards}/>}
-                {selectedComponent === 'sort' && <Sort sortBillboards={sortBillboards}/>}
+                {selectedComponent === 'search' && <Search searchBillboards={searchBillboards} />}
+                {selectedComponent === 'filter' && <Filter filterBillboards={filterBillboards} />}
+                {selectedComponent === 'sort' && <Sort sortBillboards={sortBillboards} />}
                 {selectedComponent === null && <></>}
 
                 <div className={`result_container ${selectedComponent ? selectedComponent : ''}`}>
-                    {billboardsSelected?.map((marker) => (
-                        <ResultElement billboard={marker} openPopup={openPopup} key={marker.billboardId} />
-                    ))}
+                    {isLoading ? (
+                        <div className="loading-indicator">Loading...</div>
+                    ) : (
+                        billboardsSelected?.map((marker) => (
+                            <ResultElement billboard={marker} openPopup={openPopup} key={marker.billboardId} />
+                        ))
+                    )}
                 </div>
             </div>
         </div>

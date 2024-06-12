@@ -21,6 +21,26 @@
     overflow-y: auto;
 }
 
+.result_container::-webkit-scrollbar {
+    background: #f1f1f1;
+    border-radius: 25px;
+}
+
+.result_container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 25px;
+}
+
+.result_container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 25px;
+}
+
+.result_container ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    border-radius: 25px;
+}
+
 .result_container.search{
     width: 100%;
     height: calc(100% - 28px);
@@ -99,3 +119,12 @@
      fill: black;
      transition: 500ms;
  }
+
+ .loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 20px;
+}
