@@ -49,15 +49,15 @@ const BuyForm = ({ selectedMarkers, setSelectedMarkers, markers, fetchData }) =>
           });
 
           if (!response.ok) {
-            throw new Error('Network response was not ok, ' + await response.json());
+            throw new Error('Network response was not ok, ' + await response.text());
           }
 
           setSelectedMarkers([]);
           await fetchData();
           closeForm();
           location.reload();
-        } 
-        else{
+        }
+        else {
           toLogin();
         }
       } catch (error) {
