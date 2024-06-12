@@ -1,16 +1,13 @@
-import './index.css';
 import { useState } from 'react';
 const RegisterForm = ({ registerUser, setIsRegistered }) => {
     const [formData, setFormData] = useState({ firstName: '', secondName: '', email: '', password: '' });
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        try{
         const result = await registerUser(formData);
         alert("User " + formData.firstName + " " + formData.secondName + " successfuly registered.");
 
         setIsRegistered(true);
-        }catch{}
     };
 
     return (

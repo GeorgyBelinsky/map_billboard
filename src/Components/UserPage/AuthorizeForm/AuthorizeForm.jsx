@@ -1,4 +1,3 @@
-import './index.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 const AuthorizeForm = ({ authUser }) => {
@@ -11,15 +10,13 @@ const AuthorizeForm = ({ authUser }) => {
 
     const handleAuthenticate = async (e) => {
         e.preventDefault();
-
-        try{
         const result = await authUser(credentials);
         localStorage.setItem('token', result);
+        //localStorage.setItem('isAdminSupport', result.isAdminSupport);
 
         alert('Authentication successfull');
         toMap();
         location.reload();
-        }catch{}
     };
 
     return (
