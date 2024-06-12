@@ -9,13 +9,17 @@ import picture from '../../assets/picture.png';
 import PopupContent from '../PopUpContent/PopUpContent';
 import BuyForm from '../BuyForm/BuyForm';
 import Actions from '../Actions/Actions';
+import CreateBillboard from '../CreateBillboard/CreateBillboard';
 
 const MapContainer = ({ markers, fetchData }) => {
     const mapPlacer = useRef(null);
     const [selectedMarkers, setSelectedMarkers] = useState([]);
-    const [mapInstance, setMapInstance] = useState(null); // State to store map instance
-    const [markerInstances, setMarkerInstances] = useState([]); // State to store marker instances
-    const [currentPopup, setCurrentPopup] = useState(null); // State to store the currently open popup
+    const [mapInstance, setMapInstance] = useState(null);
+    const [markerInstances, setMarkerInstances] = useState([]);
+    const [currentPopup, setCurrentPopup] = useState(null);
+
+    const placingMarkerRef = useRef(false);
+    const [markerCoordinates, setMarkerCoordinates] = useState({ longitude: null, latitude: null });
 
     useEffect(() => {
         const basemapStyleURL = `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/`;
@@ -27,7 +31,6 @@ const MapContainer = ({ markers, fetchData }) => {
             zoom: 1,
         });
 
-        // Set the map instance in state
         setMapInstance(map);
 
         const markerInstancesArray = markers?.map(marker => {
@@ -39,12 +42,11 @@ const MapContainer = ({ markers, fetchData }) => {
             );
             popup.setDOMContent(popupContentNode);
 
-            const markerInstance = new maplibregl.Marker({ element: customMarker(), })
+            const markerInstance = new maplibregl.Marker({ element: customMarker()})
                 .setLngLat([marker.longitude, marker.latitude])
                 .setPopup(popup)
                 .addTo(map);
 
-            // Listen for popup open event
             popup.on('open', () => {
                 setCurrentPopup(popup);
             });
@@ -52,8 +54,16 @@ const MapContainer = ({ markers, fetchData }) => {
             return markerInstance;
         });
 
-        // Store the marker instances in state
         setMarkerInstances(markerInstancesArray);
+
+        map.on('click', (e) => {
+            if (placingMarkerRef.current) {
+                const { lng, lat } = e.lngLat;
+                setMarkerCoordinates({ longitude: lng, latitude: lat });
+                addClickEffect(map, e.point);
+                placingMarkerRef.current = false;
+            }
+        });
 
         return () => map.remove();
     }, [markers]);
@@ -70,39 +80,55 @@ const MapContainer = ({ markers, fetchData }) => {
     const openPopup = (markerId) => {
         const marker = markers?.find(marker => marker.billboardId === markerId);
         if (mapInstance && marker) {
-            // Find the corresponding marker instance
             const markerInstance = markerInstances.find(instance => instance.getLngLat().toArray().toString() === [marker.longitude, marker.latitude].toString());
 
             if (markerInstance) {
                 const popup = markerInstance.getPopup();
 
-                // Close any previously opened popup
                 if (currentPopup) {
                     currentPopup.remove();
                 }
 
-                // If the popup exists, open it
                 if (popup) {
                     popup.addTo(mapInstance);
-                    setCurrentPopup(popup); // Set the current popup
+                    setCurrentPopup(popup);
 
-                    // Zoom in on the map
                     mapInstance.flyTo({
                         center: [marker.longitude, marker.latitude],
-                        zoom: 15, // Set the desired zoom level
-                        essential: true, // Animation is considered essential and will not be canceled during user interaction.
-                        duration: 1000 // Set the duration in milliseconds (e.g., 1000 milliseconds for 1 second)
+                        zoom: 15,
+                        essential: true,
+                        duration: 1000
                     });
                 }
             }
         }
     };
 
+    const handleCoordinatesSelect = () => {
+        placingMarkerRef.current = true;
+        if (mapInstance) {
+            mapInstance.getCanvas().style.cursor = 'pointer';
+        }
+    };
+
+    const addClickEffect = (map, point) => {
+        const circle = document.createElement('div');
+        circle.className = 'map-click-circle';
+        circle.style.left = `${point.x}px`;
+        circle.style.top = `${point.y}px`;
+
+        map.getContainer().appendChild(circle);
+
+        setTimeout(() => {
+            circle.remove();
+        }, 800);
+    };
+
     return (
         <main className="main_container">
             <div className="mapWrapper" ref={mapPlacer}></div>
-            <BuyForm selectedMarkers={selectedMarkers} setSelectedMarkers={setSelectedMarkers}
-                markers={markers} fetchData={fetchData} />
+            <CreateBillboard onCoordinatesSelect={handleCoordinatesSelect} coordinates={markerCoordinates} />
+            <BuyForm selectedMarkers={selectedMarkers} setSelectedMarkers={setSelectedMarkers} markers={markers} fetchData={fetchData} />
             <Actions markers={markers} openPopup={openPopup} />
         </main>
     );
