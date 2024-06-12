@@ -4,6 +4,7 @@ import MapContainer from './Components/MapContainer/MapContainer';
 import NavBar from './Components/NavBar/NavBar';
 import UserPage from './Components/UserPage/UserPage';
 import UserInfo from './Components/UserInfo/UserInfo';
+import Support from './Components/Support/Support';
 import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -33,7 +34,7 @@ function App() {
     <>
       <NavBar />
       <Routes>
-        <Route path="/support"/>
+        <Route path="/support" element={<Support/>}/>
         <Route path="/" element={<MapContainer markers={markers} fetchData={fetchData} />} />
         <Route path="/login" element={<UserPage />} />
         <Route path="/user" element={<UserInfo />} />
