@@ -12,7 +12,7 @@ const AuthorizeForm = ({ authUser }) => {
         e.preventDefault();
         const result = await authUser(credentials);
         localStorage.setItem('token', result);
-        //localStorage.setItem('isAdminSupport', result.isAdminSupport);
+        localStorage.setItem('isAdminSupport', result.isAdminSupport);
 
         alert('Authentication successfull');
         toMap();

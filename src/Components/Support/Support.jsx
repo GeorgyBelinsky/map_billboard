@@ -9,7 +9,7 @@ const Support = () => {
 
     useEffect(() => {
         const newConnection = new signalR.HubConnectionBuilder()
-            .withUrl("https://billboardsignalrservice.service.signalr.net")
+            .withUrl("https://billboards-backend.azurewebsites.net/chathub")
             .withAutomaticReconnect()
             .build();
 
