@@ -11,12 +11,6 @@
     font-family:sans-serif;
 }
 
-.AAAAAAAAAAA{
-    min-height: 7vh;
-    max-height: 10vh;
-    border-left: 1px solid black;
-}
-
 .link{
     text-decoration: none;
 
@@ -44,5 +38,6 @@
 }
 
 .logo_container{
-    height: 150px;
+    padding-left: 10px;
+    height: 10vh;
 }
