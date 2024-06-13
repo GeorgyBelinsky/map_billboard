@@ -19,7 +19,7 @@ const AuthorizeForm = ({ authUser }) => {
         alert('Authentication successfull');
         toMap();
 
-        //location.reload();
+        location.reload();
     };
 
     return (
