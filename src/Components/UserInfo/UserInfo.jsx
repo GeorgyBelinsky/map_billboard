@@ -98,6 +98,9 @@ const UserInfo = () => {
                 <p className='user_email'>
                     {userEmail}
                 </p>
+                <p className='user_email'>
+                    {localStorage.getItem('isAdminSupport')=== 'true' ? 'role: admin':'role: user'}
+                </p>
                 <div className='logout' onClick={handleLogOut}>
                     log out
                 </div>

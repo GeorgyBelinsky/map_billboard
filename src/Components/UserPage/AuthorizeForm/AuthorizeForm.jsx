@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 const AuthorizeForm = ({ authUser }) => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
 
@@ -11,12 +11,15 @@ const AuthorizeForm = ({ authUser }) => {
     const handleAuthenticate = async (e) => {
         e.preventDefault();
         const result = await authUser(credentials);
-        localStorage.setItem('token', result);
-        localStorage.setItem('isAdminSupport', result.isAdminSupport);
-
+        
+        const resultData = JSON.parse(result); 
+        localStorage.setItem('token',resultData.authToken);
+        localStorage.setItem('isAdminSupport', resultData.isAdminSupport);
+        console.log(localStorage);
         alert('Authentication successfull');
         toMap();
-        location.reload();
+
+        //location.reload();
     };
 
     return (
