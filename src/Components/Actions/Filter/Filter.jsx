@@ -7,6 +7,7 @@ const Filter = ({ filterBillboards }) => {
     const [prices, setPrices] = useState([]);
     const [values, setValues] = useState([]);
     const [startValues, setStartValues] = useState([]);
+
     const handleChange = (values) => {
         setValues(values);
     };
@@ -33,25 +34,33 @@ const Filter = ({ filterBillboards }) => {
         fetchPrices();
     }, []);
 
-    const marks = prices.reduce((acc, price) => {
-        acc[price] = `${price}$`;
-        return acc;
-    }, {});
+    // Compute even positions for the prices
+    const marks = {};
+    const numberOfPrices = prices.length;
+    if (numberOfPrices > 1) {
+        prices.forEach((price, index) => {
+            const position = Math.round(index * (100 / (numberOfPrices - 1)));
+            marks[position] = `${price}$`;
+        });
+    }
 
     return (
         <div className="filter_settings">
             <div className="slider_container">
                 {startValues.length > 0 ? (
                     <Slider
-                    range
-                    min={startValues[0]}
-                    max={startValues[1]}
-                    step={null}
-                    defaultValue={startValues}
-                    onChange={handleChange}
-                    marks={marks} // Use the marks object here
-                />
-                
+                        range
+                        min={0}
+                        max={100}
+                        step={null}
+                        defaultValue={[0, 100]}
+                        onChange={(newValues) => {
+                            const minValueIndex = Math.round(newValues[0] * (numberOfPrices - 1) / 100);
+                            const maxValueIndex = Math.round(newValues[1] * (numberOfPrices - 1) / 100);
+                            setValues([prices[minValueIndex], prices[maxValueIndex]]);
+                        }}
+                        marks={marks}
+                    />
                 ) : (
                     <p>loading price slider...</p>
                 )}
