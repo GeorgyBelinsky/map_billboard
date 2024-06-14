@@ -27,9 +27,10 @@ const Support = () => {
                     connection.on('ReceiveMessage', (user, message) => {
                         console.log('Received message:', user, message);
                         setMessages(messages => [...messages, { user, message }]);
+                        //setActiveUsers(...activeUsers,user);
                     });
 
-                    connection.on('UpdateAdminGroups', (users) => {
+                    connection.on('UpdateAdminUsers', (users) => {
                         console.log('Active users:', users);
                         setActiveUsers(users);
                     });
