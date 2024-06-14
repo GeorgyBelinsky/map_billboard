@@ -15,7 +15,6 @@ const AuthorizeForm = ({ authUser }) => {
         const resultData = JSON.parse(result); 
         localStorage.setItem('token',resultData.authToken);
         localStorage.setItem('isAdminSupport', resultData.isAdminSupport);
-        console.log(localStorage);
         alert('Authentication successfull');
         toMap();
 

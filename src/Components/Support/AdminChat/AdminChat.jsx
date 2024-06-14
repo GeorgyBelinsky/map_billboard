@@ -1,79 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
 
-const AdminChat = () => {
-    const [chats, setChats] = useState([]);
+const AdminChat = ({ messages, connection, activeUsers }) => {
     const [selectedChat, setSelectedChat] = useState(null);
-    const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
 
-    // Simulate SignalR connection and hardcoded data
     useEffect(() => {
-        // const newConnection = new signalR.HubConnectionBuilder()
-        //     .withUrl('https://<your-azure-backend-url>/chathub')
-        //     .withAutomaticReconnect()
-        //     .build();
+        if (connection) {
+            connection.on('ReceiveMessage', (user, message) => {
+                console.log('Admin received message:', user, message);
+                if (selectedChat && selectedChat === user) {
+                    setMessages(messages => [...messages, { user, message }]);
+                }
+            });
+        }
+    }, [connection, selectedChat]);
 
-        // setConnection(newConnection);
-
-        // Simulate initial chats
-        setChats([
-            { id: 1, user: 'User1' },
-            { id: 2, user: 'User2' },
-        ]);
-    }, []);
-
-    // useEffect(() => {
-    //     if (connection) {
-    //         connection.start()
-    //             .then(result => {
-    //                 console.log('Connected!');
-                    
-    //                 connection.on('ReceiveMessage', (user, message) => {
-    //                     setMessages(messages => [...messages, { user, message }]);
-    //                 });
-
-    //                 // Replace with actual API call to fetch initial chats
-    //                 setChats([{ id: 1, user: 'User1' }, { id: 2, user: 'User2' }]);
-    //             })
-    //             .catch(e => console.log('Connection failed: ', e));
-    //     }
-    // }, [connection]);
-
-    const handleChatSelect = (chat) => {
-        setSelectedChat(chat);
-        // Replace with actual API call to fetch messages for selected chat
-        setMessages([
-            { user: chat.user, message: 'Hello!' },
-            { user: 'Admin', message: 'Hi! How can I help you?' },
-        ]);
+    const handleChatSelect = (userEmail) => {
+        setSelectedChat(userEmail);
+        // You might want to load chat history here if needed
+        setMessages([]);
     };
 
-    const handleSendMessage = (user, message) => {
-        // Simulate sending a message
-        // if (connection.connectionStarted) {
-        //     try {
-        //         await connection.send('SendMessage', user, message);
-        //     } catch (e) {
-        //         console.log(e);
-        //     }
-        // } else {
-        //     alert('No connection to server yet.');
-        // }
-        setMessages([...messages, { user: 'Admin', message }]);
-        setMessageInput('');
+    const handleSendMessage = async (message) => {
+        const groupName = `chat-${selectedChat}`;
+        try {
+            await connection.invoke('SendMessageToGroup', groupName, message);
+            setMessageInput('');
+        } catch (e) {
+            console.error('Error sending message:', e);
+        }
     };
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            handleSendMessage(selectedChat.user, messageInput);
+            handleSendMessage(messageInput);
         }
     };
 
-    const handleCloseTicket = (chatId) => {
-        setChats(chats.filter(chat => chat.id !== chatId));
-        if (selectedChat && selectedChat.id === chatId) {
+    const handleCloseTicket = (userEmail) => {
+        // Handle closing the chat, e.g., removing from active users
+        setActiveUsers(users => users.filter(user => user !== userEmail));
+        if (selectedChat === userEmail) {
             setSelectedChat(null);
             setMessages([]);
         }
@@ -84,9 +53,9 @@ const AdminChat = () => {
             <div className="sidebar">
                 <h2>Users</h2>
                 <ul>
-                    {chats.map(chat => (
-                        <li key={chat.id} onClick={() => handleChatSelect(chat)}>
-                            {chat.user}
+                    {activeUsers.map(userEmail => (
+                        <li key={userEmail} onClick={() => handleChatSelect(userEmail)}>
+                            {userEmail}
                         </li>
                     ))}
                 </ul>
@@ -95,8 +64,8 @@ const AdminChat = () => {
                 {selectedChat ? (
                     <>
                         <div className="chat_header">
-                            <h2>{selectedChat.user}</h2>
-                            <button onClick={() => handleCloseTicket(selectedChat.id)}>Close Ticket</button>
+                            <h2>{selectedChat}</h2>
+                            <button onClick={() => handleCloseTicket(selectedChat)}>Close Ticket</button>
                         </div>
                         <div className="chat_messages">
                             {messages.map((m, index) => (
@@ -111,7 +80,7 @@ const AdminChat = () => {
                                 onKeyPress={handleKeyPress}
                                 id="messageInput"
                             />
-                            <button onClick={() => handleSendMessage(selectedChat.user, messageInput)}>Send</button>
+                            <button onClick={() => handleSendMessage(messageInput)}>Send</button>
                         </div>
                     </>
                 ) : (

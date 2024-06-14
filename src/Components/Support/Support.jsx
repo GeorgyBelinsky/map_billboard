@@ -2,43 +2,15 @@ import { useState, useEffect } from 'react';
 import AdminChat from './AdminChat/AdminChat';
 import UserChat from './UserChat/UserChat';
 import * as SignalR from '@microsoft/signalr';
-
 import './index.css';
-const signalRService = {
-    connection: null,
-    startConnection: (hubUrl) => {
-        signalRService.connection = new HubConnectionBuilder()
-            .withUrl(hubUrl)
-            .build();
-
-        signalRService.connection.start().then(() => {
-            console.log('SignalR connection established.');
-        }).catch((err) => {
-            console.error('Error starting SignalR connection:', err);
-        });
-    },
-
-    onReceiveMessage: (callback) => {
-        signalRService.connection.on('ReceiveMessage', (user, message) => {
-            callback(user, message);
-        });
-    },
-
-    sendMessage: (user, message) => {
-        signalRService.connection.invoke('SendMessage', user, message)
-            .catch((err) => {
-                console.error('Error sending message:', err);
-            });
-    },
-};
 
 const Support = () => {
-/*     const [message, setMessage] = useState('');
     const [connection, setConnection] = useState(null);
     const [messages, setMessages] = useState([]);
+    const [activeUsers, setActiveUsers] = useState([]);
 
     useEffect(() => {
-        const newConnection = new signalR.HubConnectionBuilder()
+        const newConnection = new SignalR.HubConnectionBuilder()
             .withUrl("https://billboards-backend.azurewebsites.net/chathub")
             .withAutomaticReconnect()
             .build();
@@ -49,25 +21,34 @@ const Support = () => {
     useEffect(() => {
         if (connection) {
             connection.start()
-                .then(result => {
+                .then(() => {
                     console.log('Connected!');
 
                     connection.on('ReceiveMessage', (user, message) => {
-                        const newMessage = `${user}: ${message}`;
-                        setMessages(messages => [...messages, newMessage]);
+                        console.log('Received message:', user, message);
+                        setMessages(messages => [...messages, { user, message }]);
                     });
+
+                    connection.on('UpdateAdminGroups', (users) => {
+                        console.log('Active users:', users);
+                        setActiveUsers(users);
+                    });
+
+                    if (localStorage.getItem('isAdminSupport') === 'true') {
+                        connection.invoke('GetActiveUsers')
+                            .catch(e => console.log('Error getting active users:', e));
+                    }
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
-    }, [connection]); */
-
+    }, [connection]);
 
     return (
         <div className='chats_container'>
             {localStorage.getItem('isAdminSupport') === 'true' ?
-                <AdminChat />
+                <AdminChat messages={messages} connection={connection} activeUsers={activeUsers} />
                 :
-                <UserChat />
+                <UserChat messages={messages} connection={connection} />
             }
         </div>
     );

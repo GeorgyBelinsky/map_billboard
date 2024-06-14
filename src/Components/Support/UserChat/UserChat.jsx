@@ -1,40 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './index.css';
 
-const UserChat = () => {
-    const [messages, setMessages] = useState([]);
+const UserChat = ({ messages, connection }) => {
     const [messageInput, setMessageInput] = useState('');
 
-    // useEffect(() => {
-    //     if (connection) {
-    //         connection.start()
-    //             .then(result => {
-    //                 console.log('Connected!');
-
-    //                 connection.on('ReceiveMessage', (user, message) => {
-    //                     setMessages(messages => [...messages, { user, message }]);
-    //                 });
-
-    //                 // Replace with actual API call to fetch initial chats
-    //                 setChats([{ id: 1, user: 'User1' }, { id: 2, user: 'User2' }]);
-    //             })
-    //             .catch(e => console.log('Connection failed: ', e));
-    //     }
-    // }, [connection]);
-
-    const handleSendMessage = (message) => {
-        // Simulate sending a message
-        // if (connection.connectionStarted) {
-        //     try {
-        //         await connection.send('SendMessage', user, message);
-        //     } catch (e) {
-        //         console.log(e);
-        //     }
-        // } else {
-        //     alert('No connection to server yet.');
-        // }
-        setMessages([...messages, { user: 'Admin', message }]);
-        setMessageInput('');
+    const handleSendMessage = async (message) => {
+        try {
+            await connection.invoke('SendMessage', message);
+            setMessageInput('');
+        } catch (e) {
+            console.error('Error sending message:', e);
+        }
     };
 
     const handleKeyPress = (e) => {
