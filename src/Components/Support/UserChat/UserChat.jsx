@@ -5,11 +5,13 @@ const UserChat = ({ messages, connection }) => {
     const [messageInput, setMessageInput] = useState('');
 
     const handleSendMessage = async (message) => {
-        try {
-            await connection.invoke('SendMessage', message);
-            setMessageInput('');
-        } catch (e) {
-            console.error('Error sending message:', e);
+        if (message) {
+            try {
+                await connection.invoke('SendMessage', message);
+                setMessageInput('');
+            } catch (e) {
+                console.error('Error sending message:', e);
+            }
         }
     };
 

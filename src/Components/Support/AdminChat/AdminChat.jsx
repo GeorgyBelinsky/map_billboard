@@ -24,11 +24,13 @@ const AdminChat = ({ messages, connection, activeUsers }) => {
 
     const handleSendMessage = async (message) => {
         const groupName = `chat-${selectedChat}`;
-        try {
-            await connection.invoke('SendMessageToGroup', groupName, message);
-            setMessageInput('');
-        } catch (e) {
-            console.error('Error sending message:', e);
+        if (message) {
+            try {
+                await connection.invoke('SendMessageToGroup', groupName, message);
+                setMessageInput('');
+            } catch (e) {
+                console.error('Error sending message:', e);
+            }
         }
     };
 
