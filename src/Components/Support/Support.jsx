@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import AdminChat from './AdminChat/AdminChat';
 import UserChat from './UserChat/UserChat';
@@ -7,7 +8,6 @@ import './index.css';
 const Support = () => {
     const [connection, setConnection] = useState(null);
     const [messages, setMessages] = useState([]);
-    const [activeUsers, setActiveUsers] = useState([]);
 
     useEffect(() => {
         const newConnection = new SignalR.HubConnectionBuilder()
@@ -27,18 +27,7 @@ const Support = () => {
                     connection.on('ReceiveMessage', (user, message) => {
                         console.log('Received message:', user, message);
                         setMessages(messages => [...messages, { user, message }]);
-                        //setActiveUsers(...activeUsers,user);
                     });
-
-                    connection.on('UpdateAdminUsers', (users) => {
-                        console.log('Active users:', users);
-                        setActiveUsers(users);
-                    });
-
-                    if (localStorage.getItem('isAdminSupport') === 'true') {
-                        connection.invoke('GetActiveUsers')
-                            .catch(e => console.log('Error getting active users:', e));
-                    }
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
@@ -47,7 +36,7 @@ const Support = () => {
     return (
         <div className='chats_container'>
             {localStorage.getItem('isAdminSupport') === 'true' ?
-                <AdminChat messages={messages} connection={connection} activeUsers={activeUsers} />
+                <AdminChat messages={messages} connection={connection} />
                 :
                 <UserChat messages={messages} connection={connection} />
             }

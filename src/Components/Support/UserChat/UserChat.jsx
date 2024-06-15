@@ -29,7 +29,7 @@ const UserChat = ({ messages, connection }) => {
                 </div>
                 <div className="chat_messages">
                     {messages.map((m, index) => (
-                        <div className='chat_message' key={index}><strong>{m.user}:</strong> {m.message}</div>
+                        <div className='chat_message' key={index}><strong>{m.user}</strong> {m.message}</div>
                     ))}
                 </div>
                 <div className="chat_input">

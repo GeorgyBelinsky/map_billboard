@@ -1,25 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
 
-const AdminChat = ({ messages, connection, activeUsers }) => {
+const AdminChat = ({ messages, connection }) => {
     const [selectedChat, setSelectedChat] = useState(null);
     const [messageInput, setMessageInput] = useState('');
+    const [activeUsers, setActiveUsers] = useState([]);
+    const [userMessages, setUserMessages] = useState({});
 
     useEffect(() => {
         if (connection) {
             connection.on('ReceiveMessage', (user, message) => {
+                setActiveUsers(prevUsers => {
+                    if (!prevUsers.includes(user)) {
+                        return [...prevUsers, user];
+                    }
+                    return prevUsers;
+                });
+
                 console.log('Admin received message:', user, message);
-                if (selectedChat && selectedChat === user) {
-                    setMessages(messages => [...messages, { user, message }]);
-                }
+                
+                setUserMessages(prevMessages => {
+                    const updatedMessages = { ...prevMessages };
+                    if (!updatedMessages[user]) {
+                        updatedMessages[user] = [];
+                    }
+                    updatedMessages[user].push({ user, message });
+                    return updatedMessages;
+                });
             });
         }
-    }, [connection, selectedChat]);
+    }, [connection]);
 
     const handleChatSelect = (userEmail) => {
         setSelectedChat(userEmail);
-        // You might want to load chat history here if needed
-        setMessages([]);
     };
 
     const handleSendMessage = async (message) => {
@@ -28,6 +41,16 @@ const AdminChat = ({ messages, connection, activeUsers }) => {
             try {
                 await connection.invoke('SendMessageToGroup', groupName, message);
                 setMessageInput('');
+
+                // Add the sent message to the chat window immediately
+                setUserMessages(prevMessages => {
+                    const updatedMessages = { ...prevMessages };
+                    if (!updatedMessages[selectedChat]) {
+                        updatedMessages[selectedChat] = [];
+                    }
+                    updatedMessages[selectedChat].push({ user: 'Admin', message });
+                    return updatedMessages;
+                });
             } catch (e) {
                 console.error('Error sending message:', e);
             }
@@ -41,12 +64,17 @@ const AdminChat = ({ messages, connection, activeUsers }) => {
         }
     };
 
-    const handleCloseTicket = (userEmail) => {
-        // Handle closing the chat, e.g., removing from active users
-        setActiveUsers(users => users.filter(user => user !== userEmail));
-        if (selectedChat === userEmail) {
-            setSelectedChat(null);
-            setMessages([]);
+    const handleCloseTicket = async (userEmail) => {
+        const groupName = `chat-${userEmail}`;
+        try {
+            await connection.invoke('LeaveGroup', groupName);
+
+            setActiveUsers(users => users.filter(user => user !== userEmail));
+            if (selectedChat === userEmail) {
+                setSelectedChat(null);
+            }
+        } catch (e) {
+            console.error('Error closing ticket:', e);
         }
     };
 
@@ -70,8 +98,8 @@ const AdminChat = ({ messages, connection, activeUsers }) => {
                             <button onClick={() => handleCloseTicket(selectedChat)}>Close Ticket</button>
                         </div>
                         <div className="chat_messages">
-                            {messages.map((m, index) => (
-                                <div className='chat_message' key={index}><strong>{m.user}:</strong> {m.message}</div>
+                            {userMessages[selectedChat]?.map((m, index) => (
+                                <div className='chat_message' key={index}><strong>{m.user}:</strong>{m.message}</div>
                             ))}
                         </div>
                         <div className="chat_input">
