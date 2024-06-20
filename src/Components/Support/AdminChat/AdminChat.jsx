@@ -36,10 +36,9 @@ const AdminChat = ({ messages, connection }) => {
     };
 
     const handleSendMessage = async (message) => {
-        const groupName = `chat-${selectedChat}`;
         if (message) {
             try {
-                await connection.invoke('SendMessageToGroup', groupName, message);
+                await connection.invoke('SendMessage', selectedChat, message);
                 setMessageInput('');
 
                 // Add the sent message to the chat window immediately
@@ -65,7 +64,7 @@ const AdminChat = ({ messages, connection }) => {
     };
 
     const handleCloseTicket = async (userEmail) => {
-        const groupName = `chat-${userEmail}`;
+        const groupName = userEmail;
         try {
             await connection.invoke('LeaveGroup', groupName);
 

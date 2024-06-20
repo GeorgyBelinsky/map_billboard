@@ -1,13 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 
 const UserChat = ({ messages, connection }) => {
     const [messageInput, setMessageInput] = useState('');
+    const [userNickname, setUserNickname] = useState('');
 
+    useEffect(()=>{
+        getUserNickname();
+    },[])
+
+    const getUserNickname = async () => {
+        try {
+            const response = await fetch(`https://billboards-backend.azurewebsites.net/api/User/UserCheck`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.text();
+
+            setUserNickname(result);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
     const handleSendMessage = async (message) => {
         if (message) {
             try {
-                await connection.invoke('SendMessage', message);
+                await connection.invoke('SendMessage', userNickname, message);
                 setMessageInput('');
             } catch (e) {
                 console.error('Error sending message:', e);
